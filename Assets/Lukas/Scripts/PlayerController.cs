@@ -25,12 +25,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Render Layer Settings")]
     [SerializeField] LayerMask firstPersonCullingMask;
+
     [SerializeField] LayerMask thirdPersonCullingMask;
 
     [Header("Collision Based Settings")]
     [SerializeField] LayerMask firstPersonBlockingMask;
+
     [SerializeField] LayerMask thirdPersonBlockingMask;
-    
+
     [Header("Movement Settings")]
     [SerializeField] float moveSpeed = 1f;
 
@@ -72,45 +74,6 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = _callbackContext.ReadValue<Vector2>();
     }
-
-    // void DoMove()
-    // {
-    //     if (cinemachineBrain.IsBlending || moveInput.sqrMagnitude < 0.01f)
-    //     {
-    //         var v = playerRigidbody.velocity;
-    //         playerRigidbody.velocity = new Vector3(0, v.y, 0);
-    //         return;
-    //     }
-// 
-    //     var input = new Vector3(moveInput.x, 0, moveInput.y);
-    //     Vector3 moveDirection;
-// 
-    //     if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera)
-    //     {
-    //         var camFollow = thirdPersonCamera.Follow;
-    //         var forward = Vector3.Scale(camFollow.forward, new Vector3(1, 0, 1)).normalized;
-    //         var right = Vector3.Scale(camFollow.right, new Vector3(1, 0, 1)).normalized;
-    //         moveDirection = (forward * input.z + right * input.x).normalized;
-    //     }
-    //     else
-    //     {
-    //         moveDirection = transform.TransformDirection(input).normalized;
-    //     }
-// 
-    //     var velocity = moveDirection * moveSpeed;
-    //     velocity.y = playerRigidbody.velocity.y;
-    //     playerRigidbody.velocity = velocity;
-// 
-    //     if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera != thirdPersonCamera) return;
-    //     float alignment = Vector3.Dot(transform.forward, moveDirection);
-    //     if (!(alignment > -0.2f)) return;
-    //     float currentY = transform.eulerAngles.y;
-    //     float targetY = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-    //     float smoothY = Mathf.SmoothDampAngle(currentY, targetY, ref turnVelocity, rotationTime);
-    //     transform.rotation = Quaternion.Euler(0f, smoothY, 0f);
-    // }
-
-
     void DoMove()
     {
         if (cinemachineBrain.IsBlending || moveInput.sqrMagnitude < 0.01f)
@@ -173,14 +136,14 @@ public class PlayerController : MonoBehaviour
     public void SwapCamera(InputAction.CallbackContext _callbackContext)
     {
         if (_callbackContext.phase != InputActionPhase.Started) return;
-        if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == firstPersonCamera && !swapBlocker.GetSwapBlocked(transform,thirdPersonBlockingMask))
+        if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == firstPersonCamera && !swapBlocker.GetSwapBlocked(transform, thirdPersonBlockingMask))
         {
             thirdPersonCamera.MoveToTopOfPrioritySubqueue();
             mainUnityCamera.cullingMask = thirdPersonCullingMask;
             Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), true);
             Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), false);
         }
-        else if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera && !swapBlocker.GetSwapBlocked(transform,firstPersonBlockingMask))
+        else if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera && !swapBlocker.GetSwapBlocked(transform, firstPersonBlockingMask))
         {
             firstPersonCamera.MoveToTopOfPrioritySubqueue();
             mainUnityCamera.cullingMask = firstPersonCullingMask;
