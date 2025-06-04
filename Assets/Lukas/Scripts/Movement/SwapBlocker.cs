@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Lukas.Scripts
+namespace Scripts.Movement
 {
     public class SwapBlocker
     {

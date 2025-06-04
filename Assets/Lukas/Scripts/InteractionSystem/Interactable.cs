@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using Scripts.DialogueSystem;
+using UnityEngine;
+
+namespace Scripts.InteractionSystem
+{
+    public abstract class Interactable : MonoBehaviour, IInteractable
+    {
+        [SerializeField] protected List<Interactable> prerequisites;
+        [SerializeField][TextArea] protected string voiceLine1;
+        [SerializeField][TextArea] protected string voiceLine2;
+        [SerializeField][TextArea] protected string voiceLine3;
+        [SerializeField][TextArea] protected string voiceLine4;
+        [SerializeField][TextArea] protected string voiceLineResolved;
+
+        protected bool interacted;
+        public bool Interacted => interacted;
+        
+        protected bool resolved;
+        public bool Resolved => resolved;
+        
+        protected readonly Dictionary<(bool, bool), Action> interactionMap = new Dictionary<(bool interacted, bool hasPrerequisites), Action>();
+        
+        protected readonly List<string> voiceLines = new List<string>();
+
+        protected virtual void Awake()
+        {
+            voiceLines.Add(voiceLine1);
+            voiceLines.Add(voiceLine2);
+            voiceLines.Add(voiceLine3);
+            voiceLines.Add(voiceLine4);
+            voiceLines.Add(voiceLineResolved);
+        }
+
+        public abstract void Interact();
+        public abstract bool CheckPrerequisites();
+        public abstract void PlayVoiceLine(EVoiceLineType _voiceLineType);
+    }
+}
