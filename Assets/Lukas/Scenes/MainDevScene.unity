@@ -758,6 +758,7 @@ GameObject:
   - component: {fileID: 1290700938}
   - component: {fileID: 1290700939}
   - component: {fileID: 1290700940}
+  - component: {fileID: 1290700941}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -972,6 +973,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef1d6fe4d1804a8b87eb6b59406d33f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1290700941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290700932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 1290700932}
 --- !u!1 &1403648034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1396,6 +1411,8 @@ GameObject:
   - component: {fileID: 1803672025}
   - component: {fileID: 1803672024}
   - component: {fileID: 1803672023}
+  - component: {fileID: 1803672027}
+  - component: {fileID: 1803672028}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -1489,6 +1506,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1803672027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803672022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -385494015
+      Data2: 1195472629
+      Data3: -2064153176
+      Data4: 1900422219
+    Path: event:/Character/Player Footsteps
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params:
+  - Name: Surface
+    Value: 0
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &1803672028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803672022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f6a950b28846629048b0701ce71f98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1998928062
 GameObject:
   m_ObjectHideFlags: 3
