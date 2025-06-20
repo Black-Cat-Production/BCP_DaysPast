@@ -21,24 +21,23 @@ namespace Scripts.Movement
         [SerializeField] CinemachineVirtualCamera thirdPersonCamera;
         [SerializeField] [Range(0, 90)] float cameraClampAngle;
         [SerializeField] float lookSensitivity = 2.0f;
+        CinemachineInputProvider cinemachineInputProvider;
 
         [Header("Render Layer Settings")]
         [SerializeField] LayerMask firstPersonCullingMask;
-
         [SerializeField] LayerMask thirdPersonCullingMask;
 
         [Header("Collision Based Settings")]
         [SerializeField] LayerMask firstPersonBlockingMask;
-
         [SerializeField] LayerMask thirdPersonBlockingMask;
 
         [Header("Movement Settings")]
         [SerializeField] float moveSpeed = 1f;
-
         [SerializeField] float rotationTime = 0.1f;
         float turnVelocity;
 
         SwapBlocker swapBlocker;
+        
 
         void Awake()
         {
@@ -47,6 +46,8 @@ namespace Scripts.Movement
             Cursor.lockState = CursorLockMode.Locked;
             firstPersonCamera.MoveToTopOfPrioritySubqueue();
             mainUnityCamera.cullingMask = firstPersonCullingMask;
+            cinemachineInputProvider = thirdPersonCamera.GetComponent<CinemachineInputProvider>();
+            cinemachineInputProvider.enabled = false;
         }
 
         void FixedUpdate()
@@ -69,6 +70,16 @@ namespace Scripts.Movement
             transform.Rotate(Vector3.up * lookX);
         }
 
+        public void TP_Look(InputAction.CallbackContext _callbackContext)
+        {
+            cinemachineInputProvider.enabled = _callbackContext.phase switch
+            {
+                InputActionPhase.Started => true,
+                InputActionPhase.Canceled => false,
+                _ => cinemachineInputProvider.enabled
+            };
+        }
+
         public void Move(InputAction.CallbackContext _callbackContext)
         {
             moveInput = _callbackContext.ReadValue<Vector2>();
@@ -85,7 +96,7 @@ namespace Scripts.Movement
             var moveDirection = GetMoveDirection(input);
             ApplyMovementVelocity(moveDirection);
 
-            if (IsThirdPersonActive() && ShouldRotate(moveDirection))
+            if (IsThirdPersonActive())
             {
                 RotateTowards(moveDirection);
             }
@@ -93,23 +104,29 @@ namespace Scripts.Movement
 
         void StopHorizontalMovement()
         {
-            var v = playerRigidbody.velocity;
-            playerRigidbody.velocity = new Vector3(0, v.y, 0);
+            var velocity = playerRigidbody.velocity;
+            playerRigidbody.velocity = new Vector3(0, velocity.y, 0);
         }
 
         Vector3 GetMoveDirection(Vector3 _input)
         {
+            
             if (!IsThirdPersonActive()) return transform.TransformDirection(_input).normalized;
-            var camFollow = thirdPersonCamera.Follow;
-            var forward = Vector3.Scale(camFollow.forward, new Vector3(1, 0, 1)).normalized;
-            var right = Vector3.Scale(camFollow.right, new Vector3(1, 0, 1)).normalized;
-            return (forward * _input.z + right * _input.x).normalized;
+            var camTransform = thirdPersonCamera.transform;
+            var forward = Vector3.ProjectOnPlane(camTransform.forward, Vector3.up).normalized;
+            var right = Vector3.ProjectOnPlane(camTransform.right, Vector3.up).normalized;
+            var moveDirection = forward * _input.z + right * _input.x;
+
+            return moveDirection.normalized;
         }
 
         void ApplyMovementVelocity(Vector3 _moveDirection)
         {
             var velocity = _moveDirection * moveSpeed;
             velocity.y = playerRigidbody.velocity.y;
+            
+            Debug.DrawRay(transform.position, _moveDirection * 2, Color.red, 0.1f);
+            
             playerRigidbody.velocity = velocity;
         }
 
@@ -117,13 +134,6 @@ namespace Scripts.Movement
         {
             return (CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera;
         }
-
-        bool ShouldRotate(Vector3 _moveDirection)
-        {
-            float alignment = Vector3.Dot(transform.forward, _moveDirection);
-            return alignment > -0.2f;
-        }
-
         void RotateTowards(Vector3 _moveDirection)
         {
             float currentY = transform.eulerAngles.y;
@@ -137,6 +147,7 @@ namespace Scripts.Movement
             if (_callbackContext.phase != InputActionPhase.Started) return;
             if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == firstPersonCamera && !swapBlocker.GetSwapBlocked(transform, thirdPersonBlockingMask))
             {
+                thirdPersonCamera.transform.LookAt(transform.forward);
                 thirdPersonCamera.MoveToTopOfPrioritySubqueue();
                 mainUnityCamera.cullingMask = thirdPersonCullingMask;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), true);
