@@ -7,5 +7,6 @@ namespace Scripts.MinigameSystem
         public abstract void Play();
         protected abstract void EndGame();
         protected abstract void OpenUI();
+        protected abstract void CloseUI();
     }
 }
