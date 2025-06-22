@@ -1,4 +1,5 @@
 using Cinemachine;
+using Scripts.MinigameSystem.Memory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,19 +26,26 @@ namespace Scripts.Movement
 
         [Header("Render Layer Settings")]
         [SerializeField] LayerMask firstPersonCullingMask;
+
         [SerializeField] LayerMask thirdPersonCullingMask;
 
         [Header("Collision Based Settings")]
         [SerializeField] LayerMask firstPersonBlockingMask;
+
         [SerializeField] LayerMask thirdPersonBlockingMask;
 
         [Header("Movement Settings")]
         [SerializeField] float moveSpeed = 1f;
+
         [SerializeField] float rotationTime = 0.1f;
         float turnVelocity;
 
+        [Header("MemoryGame Specific")]
+        [SerializeField] LayerMask memoryCardLayer;
+
         SwapBlocker swapBlocker;
-        
+        PlayerInput playerInput;
+
 
         void Awake()
         {
@@ -48,6 +56,7 @@ namespace Scripts.Movement
             mainUnityCamera.cullingMask = firstPersonCullingMask;
             cinemachineInputProvider = thirdPersonCamera.GetComponent<CinemachineInputProvider>();
             cinemachineInputProvider.enabled = false;
+            playerInput = GetComponent<PlayerInput>();
         }
 
         void FixedUpdate()
@@ -84,6 +93,7 @@ namespace Scripts.Movement
         {
             moveInput = _callbackContext.ReadValue<Vector2>();
         }
+
         void DoMove()
         {
             if (cinemachineBrain.IsBlending || moveInput.sqrMagnitude < 0.01f)
@@ -110,7 +120,6 @@ namespace Scripts.Movement
 
         Vector3 GetMoveDirection(Vector3 _input)
         {
-            
             if (!IsThirdPersonActive()) return transform.TransformDirection(_input).normalized;
             var camTransform = thirdPersonCamera.transform;
             var forward = Vector3.ProjectOnPlane(camTransform.forward, Vector3.up).normalized;
@@ -124,9 +133,9 @@ namespace Scripts.Movement
         {
             var velocity = _moveDirection * moveSpeed;
             velocity.y = playerRigidbody.velocity.y;
-            
+
             Debug.DrawRay(transform.position, _moveDirection * 2, Color.red, 0.1f);
-            
+
             playerRigidbody.velocity = velocity;
         }
 
@@ -134,6 +143,7 @@ namespace Scripts.Movement
         {
             return (CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera;
         }
+
         void RotateTowards(Vector3 _moveDirection)
         {
             float currentY = transform.eulerAngles.y;
@@ -160,6 +170,16 @@ namespace Scripts.Movement
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), false);
             }
+        }
+
+        public void MemoryGameClick(InputAction.CallbackContext _callbackContext)
+        {
+            if (_callbackContext.phase != InputActionPhase.Started) return;
+            Physics.Raycast(mainUnityCamera.ScreenPointToRay(Input.mousePosition), out var hit, memoryCardLayer);
+            Debug.Log(hit.collider.gameObject.name);
+            var card = hit.collider.gameObject.GetComponentInParent<MemoryCard>();
+            if (card == null) return;
+            card.Select();
         }
     }
 }

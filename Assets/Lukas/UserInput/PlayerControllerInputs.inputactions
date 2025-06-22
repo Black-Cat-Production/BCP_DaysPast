@@ -152,6 +152,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "MemoryGame",
+            "id": "1b7c939d-056a-41e2-888c-773acdb7ca10",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "f6a83ce8-8bd0-48c4-ba3f-63fa0b95e218",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8e3362d5-5667-4e4b-9051-942dd11efcc1",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
