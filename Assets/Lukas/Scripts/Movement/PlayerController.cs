@@ -43,8 +43,10 @@ namespace Scripts.Movement
         [Header("MemoryGame Specific")]
         [SerializeField] LayerMask memoryCardLayer;
 
+        [Header("Animation Settings")]
+        [SerializeField] Animator animator;
+
         SwapBlocker swapBlocker;
-        PlayerInput playerInput;
 
 
         void Awake()
@@ -56,7 +58,6 @@ namespace Scripts.Movement
             mainUnityCamera.cullingMask = firstPersonCullingMask;
             cinemachineInputProvider = thirdPersonCamera.GetComponent<CinemachineInputProvider>();
             cinemachineInputProvider.enabled = false;
-            playerInput = GetComponent<PlayerInput>();
         }
 
         void FixedUpdate()
@@ -92,6 +93,9 @@ namespace Scripts.Movement
         public void Move(InputAction.CallbackContext _callbackContext)
         {
             moveInput = _callbackContext.ReadValue<Vector2>();
+            if(moveInput == Vector2.right) animator.SetTrigger("TurnR");
+            if(moveInput == Vector2.left) animator.SetTrigger("TurnL");
+            animator.SetBool("IsWalking", moveInput.magnitude > Vector2.zero.magnitude);
         }
 
         void DoMove()
