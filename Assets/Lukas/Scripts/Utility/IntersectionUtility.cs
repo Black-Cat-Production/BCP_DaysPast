@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Scripts.MinigameSystem.ConnectTheDots;
 using UnityEngine;
 
-namespace Scripts.MinigameSystem.ConnectTheDots
+namespace Scripts.Utility
 {
     public static class IntersectionUtility
     {

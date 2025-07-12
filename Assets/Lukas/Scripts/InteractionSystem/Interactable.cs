@@ -24,6 +24,8 @@ namespace Scripts.InteractionSystem
         
         protected readonly List<string> voiceLines = new List<string>();
 
+        public Action OnInteracted;
+
         protected virtual void Awake()
         {
             voiceLines.Add(voiceLine1);
@@ -36,5 +38,7 @@ namespace Scripts.InteractionSystem
         public abstract void Interact();
         public abstract bool CheckPrerequisites();
         public abstract void PlayVoiceLine(EVoiceLineType _voiceLineType);
+
+        public abstract void ContinueMainItem();
     }
 }

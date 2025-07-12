@@ -37,6 +37,7 @@ namespace Scripts.InteractionSystem
             if (!hasPrerequisites) return;
             Debug.Log("Starting Mini-game or Story goes forward etc.");
             if(TryGetComponent(out Minigame minigame)) minigame.Play();
+            ContinueMainItem();
         }
 
         public override bool CheckPrerequisites()
@@ -47,6 +48,11 @@ namespace Scripts.InteractionSystem
         public override void PlayVoiceLine(EVoiceLineType _voiceLineType)
         {
             Debug.Log(voiceLines[(int)_voiceLineType]);
+        }
+
+        public override void ContinueMainItem()
+        {
+            OnInteracted?.Invoke();
         }
     }
 }

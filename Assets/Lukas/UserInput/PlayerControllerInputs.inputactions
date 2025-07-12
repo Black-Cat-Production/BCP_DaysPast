@@ -180,6 +180,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "FlowerbookGame",
+            "id": "29670f07-c59e-491a-819e-aa7937ccfe3d",
+            "actions": [
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "59245d7c-7396-4df1-9501-4544e99a26a4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bd97a84f-9ea1-45b4-9e41-cfaddd78063e",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

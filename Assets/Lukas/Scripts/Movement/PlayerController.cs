@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using Scripts.MinigameSystem.Memory;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace Scripts.Movement
         float xRotation;
 
         [Header("Camera Settings")]
+        [SerializeField] bool isMainHub;
+
         [SerializeField] Camera mainUnityCamera;
 
         [SerializeField] CinemachineBrain cinemachineBrain;
@@ -48,16 +51,28 @@ namespace Scripts.Movement
 
         SwapBlocker swapBlocker;
 
-
+        public Action<float> OnScroll;
+        
         void Awake()
         {
             swapBlocker = new SwapBlocker();
             playerRigidbody = GetComponent<Rigidbody>();
             Cursor.lockState = CursorLockMode.Locked;
+            if (isMainHub) return;
             firstPersonCamera.MoveToTopOfPrioritySubqueue();
             mainUnityCamera.cullingMask = firstPersonCullingMask;
             cinemachineInputProvider = thirdPersonCamera.GetComponent<CinemachineInputProvider>();
             cinemachineInputProvider.enabled = false;
+        }
+
+        void Start()
+        {
+            if (isMainHub) return;
+            cinemachineBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 1);
+            firstPersonCamera.MoveToTopOfPrioritySubqueue();
+            cinemachineBrain.ManualUpdate();
+            cinemachineBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Linear, 2);
+            
         }
 
         void FixedUpdate()
@@ -67,7 +82,11 @@ namespace Scripts.Movement
 
         public void FP_Look(InputAction.CallbackContext _callbackContext)
         {
-            if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera != firstPersonCamera || cinemachineBrain.IsBlending) return;
+            if (!isMainHub)
+            {
+                if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera != firstPersonCamera || cinemachineBrain.IsBlending) return;
+            }
+
             playerLook = _callbackContext.ReadValue<Vector2>();
             float lookX = playerLook.x * lookSensitivity;
             float lookY = playerLook.y * lookSensitivity;
@@ -75,7 +94,15 @@ namespace Scripts.Movement
             xRotation -= lookY;
             xRotation = Mathf.Clamp(xRotation, -cameraClampAngle, cameraClampAngle);
 
-            firstPersonCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            if (isMainHub)
+            {
+                mainUnityCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            }
+            else
+            {
+                firstPersonCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            }
+
 
             transform.Rotate(Vector3.up * lookX);
         }
@@ -93,23 +120,26 @@ namespace Scripts.Movement
         public void Move(InputAction.CallbackContext _callbackContext)
         {
             moveInput = _callbackContext.ReadValue<Vector2>();
-            if(moveInput == Vector2.right) animator.SetTrigger("TurnR");
-            if(moveInput == Vector2.left) animator.SetTrigger("TurnL");
+            if (moveInput == Vector2.right) animator.SetTrigger("TurnR");
+            if (moveInput == Vector2.left) animator.SetTrigger("TurnL");
             animator.SetBool("IsWalking", moveInput.magnitude > Vector2.zero.magnitude);
         }
 
         void DoMove()
         {
-            if (cinemachineBrain.IsBlending || moveInput.sqrMagnitude < 0.01f)
+            if (!isMainHub)
             {
-                StopHorizontalMovement();
-                return;
+                if (cinemachineBrain.IsBlending || moveInput.sqrMagnitude < 0.01f)
+                {
+                    StopHorizontalMovement();
+                    return;
+                }
             }
 
             var input = new Vector3(moveInput.x, 0, moveInput.y);
             var moveDirection = GetMoveDirection(input);
             ApplyMovementVelocity(moveDirection);
-
+            if (isMainHub) return;
             if (IsThirdPersonActive())
             {
                 RotateTowards(moveDirection);
@@ -124,7 +154,7 @@ namespace Scripts.Movement
 
         Vector3 GetMoveDirection(Vector3 _input)
         {
-            if (!IsThirdPersonActive()) return transform.TransformDirection(_input).normalized;
+            if (isMainHub || !IsThirdPersonActive()) return transform.TransformDirection(_input).normalized;
             var camTransform = thirdPersonCamera.transform;
             var forward = Vector3.ProjectOnPlane(camTransform.forward, Vector3.up).normalized;
             var right = Vector3.ProjectOnPlane(camTransform.right, Vector3.up).normalized;
@@ -145,6 +175,7 @@ namespace Scripts.Movement
 
         bool IsThirdPersonActive()
         {
+            if (isMainHub) return false;
             return (CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera;
         }
 
@@ -158,6 +189,7 @@ namespace Scripts.Movement
 
         public void SwapCamera(InputAction.CallbackContext _callbackContext)
         {
+            if (isMainHub) return;
             if (_callbackContext.phase != InputActionPhase.Started) return;
             if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == firstPersonCamera && !swapBlocker.GetSwapBlocked(transform, thirdPersonBlockingMask))
             {
@@ -170,6 +202,7 @@ namespace Scripts.Movement
             else if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera && !swapBlocker.GetSwapBlocked(transform, firstPersonBlockingMask))
             {
                 firstPersonCamera.MoveToTopOfPrioritySubqueue();
+                firstPersonCamera.transform.forward = transform.forward;
                 mainUnityCamera.cullingMask = firstPersonCullingMask;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), false);
@@ -184,6 +217,12 @@ namespace Scripts.Movement
             var card = hit.collider.gameObject.GetComponentInParent<MemoryCard>();
             if (card == null) return;
             card.Select();
+        }
+
+        public void RotateFlower(InputAction.CallbackContext _context)
+        {
+            float yDelta = _context.ReadValue<Vector2>().y;
+            OnScroll?.Invoke(yDelta);
         }
     }
 }

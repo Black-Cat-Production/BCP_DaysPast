@@ -14,6 +14,7 @@ namespace Scripts.MinigameSystem.Flowerbook
         Vector3 startPosition;
 
         public Action<Leaf> OnPlace;
+        public Action<Leaf> OnPickup;
 
         void Awake()
         {
@@ -26,9 +27,9 @@ namespace Scripts.MinigameSystem.Flowerbook
             if (gotPlaced) return;
             Debug.Log("OnPointerClick");
             pickedUp = !pickedUp;
-            Debug.Log(pickedUp);
+            OnPickup?.Invoke(this);
             if (pickedUp) return;
-            OnPlace.Invoke(this);
+            OnPlace?.Invoke(this);
         }
 
         void FixedUpdate()

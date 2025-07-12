@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
+using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Scripts.MinigameSystem.Memory
 {
@@ -15,9 +16,14 @@ namespace Scripts.MinigameSystem.Memory
         [SerializeField] PlayerInput playerInput;
         [SerializeField] Vector3 removedPosition;
         [SerializeField] float turnWaitTime;
+        [SerializeField] float rotationMin;
+        [SerializeField] float rotationMax;
+        [SerializeField] float liftDuration;
+        [SerializeField] float flipDuration;
 
         MemoryCard firstSelectedCard;
         Coroutine waitRoutine;
+        Coroutine turnRoutine;
 
         bool isGameOver;
 
@@ -27,6 +33,8 @@ namespace Scripts.MinigameSystem.Memory
             foreach (var card in cards)
             {
                 card.OnFaceUp += CardSelect;
+                float randomRota = Random.Range(rotationMin, rotationMax);
+                card.transform.rotation = Quaternion.Euler(card.transform.rotation.x, randomRota, -180);
             }
         }
 
@@ -49,7 +57,7 @@ namespace Scripts.MinigameSystem.Memory
 
         public override void Play()
         {
-            if(isGameOver) return;
+            if (isGameOver) return;
             miniGameCam.gameObject.SetActive(true);
             miniGameCam.MoveToTopOfPrioritySubqueue();
             playerInput.SwitchCurrentActionMap("MemoryGame");
@@ -71,29 +79,28 @@ namespace Scripts.MinigameSystem.Memory
 
         void CardSelect(MemoryCard _card)
         {
+            if (turnRoutine != null || waitRoutine != null) return;
             if (firstSelectedCard == null) firstSelectedCard = _card;
+            turnRoutine = StartCoroutine(TurnAroundRoutine(_card, false));
             if (firstSelectedCard == _card) return;
-            if (waitRoutine != null)
-            {
-                _card.TurnFaceDown();
-                return;
-            }
+
 
             waitRoutine = StartCoroutine(firstSelectedCard.Id == _card.Id ? WaitRoutine(_card, true) : WaitRoutine(_card, false));
         }
 
         IEnumerator WaitRoutine(MemoryCard _card, bool _isCorrect)
         {
+            while (turnRoutine != null) yield return null;
             yield return new WaitForSeconds(turnWaitTime);
             if (_isCorrect)
             {
-                firstSelectedCard.RemoveFromBoard(CalculateYCoord());
-                _card.RemoveFromBoard(CalculateYCoord());
+                StartCoroutine(firstSelectedCard.RemoveFromBoard(0.4f, CalculateYCoord()));
+                yield return _card.RemoveFromBoard(0.7f, CalculateYCoord());
             }
             else
             {
-                _card.TurnFaceDown();
-                firstSelectedCard.TurnFaceDown();
+                StartCoroutine(TurnAroundRoutine(_card, true));
+                yield return TurnAroundRoutine(firstSelectedCard, true);
             }
 
             waitRoutine = null;
@@ -107,6 +114,26 @@ namespace Scripts.MinigameSystem.Memory
             return new Vector3(removedPosition.x, removedPosition.y + removedCards * 0.015f, removedPosition.z);
         }
 
+        IEnumerator TurnAroundRoutine(MemoryCard _card, bool _reverse)
+        {
+            var startRot = _card.transform.rotation;
+            var endRot = Quaternion.Euler(0, _card.transform.eulerAngles.y, 0);
+            var startPos = _card.transform.position;
+            var liftedPos = startPos + Vector3.up / 4;
+
+            if (_reverse)
+            {
+                endRot = Quaternion.Euler(0, _card.transform.eulerAngles.y, 180);
+            }
+
+            yield return OverTimeMovement.MoveOverTime(startPos, liftedPos, liftDuration, _pos => _card.transform.position = _pos);
+
+            yield return OverTimeMovement.MoveOverTime(startRot, endRot, flipDuration, _rot => _card.transform.rotation = _rot);
+
+            yield return OverTimeMovement.MoveOverTime(liftedPos, startPos, liftDuration, _pos => _card.transform.position = _pos);
+
+            turnRoutine = null;
+        }
 
         protected override void OpenUI()
         {

@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Numerics;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Scripts.MinigameSystem.Memory
 {
@@ -8,35 +13,36 @@ namespace Scripts.MinigameSystem.Memory
     {
         [field: SerializeField] public int Id { get; private set; }
         public bool IsRemoved { get; private set; }
-        bool isFaceUp;
+
+        float timer;
 
         public Action<MemoryCard> OnFaceUp;
 
         void TurnFaceUp()
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            transform.position = new Vector3(transform.position.x, 1.5f, transform.position.z);
             OnFaceUp.Invoke(this);
-        }
-
-        public void TurnFaceDown()
-        {
-            transform.rotation = Quaternion.Euler(0, 0, -180);
-            transform.position = new Vector3(transform.position.x, 1.515f, transform.position.z);
-        }
-
-        public void RemoveFromBoard(Vector3 _targetPosition)
-        {
-            transform.position = _targetPosition;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            IsRemoved = true;
         }
 
         public void Select()
         {
             Debug.Log("I got clicked! " + name);
             if (IsRemoved) return;
-            if (!isFaceUp) TurnFaceUp();
+            TurnFaceUp();
+        }
+
+
+        public IEnumerator RemoveFromBoard(float _duration, Vector3 _targetPosition)
+        {
+            IsRemoved = true;
+            float elapsedTime = 0;
+            var currentPos = transform.position;
+            while (elapsedTime < _duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / _duration;
+                transform.position = Vector3.Lerp(currentPos, _targetPosition, t);
+                yield return null;
+            }
         }
     }
 }
