@@ -40,8 +40,8 @@ namespace Scripts.MinigameSystem.Flowerbook
             {
                 leaf.OnPlace += PlaceLeaf;
                 leaf.OnPickup += SelectLeaf;
-                float randomRota = Random.Range(randomFlowerRotationMin, randomFlowerRotationMax);
-                leaf.transform.rotation = Quaternion.Euler(0,0,randomRota);
+                //float randomRota = Random.Range(randomFlowerRotationMin, randomFlowerRotationMax);
+                //leaf.transform.rotation = Quaternion.Euler(0,0,randomRota);
             }
             playerController.OnScroll += RotateFlower;
         }

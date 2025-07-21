@@ -142,7 +142,7 @@ namespace Scripts.Movement
             if (isMainHub) return;
             if (IsThirdPersonActive())
             {
-                RotateTowards(moveDirection);
+                //RotateTowards(moveDirection);
             }
         }
 
@@ -171,6 +171,13 @@ namespace Scripts.Movement
             Debug.DrawRay(transform.position, _moveDirection * 2, Color.red, 0.1f);
 
             playerRigidbody.velocity = velocity;
+        }
+
+        void OnAnimatorMove()
+        {
+            if (!animator) return;
+            Debug.Log("Delta Rotation: " + animator.deltaRotation.eulerAngles);
+            transform.rotation *= animator.deltaRotation;
         }
 
         bool IsThirdPersonActive()
