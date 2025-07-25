@@ -26,6 +26,7 @@ namespace Scripts.MinigameSystem.Flowerbook
 
         public override void Play()
         {
+            if (gameIsDone) return;
             OpenUI();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -93,6 +94,7 @@ namespace Scripts.MinigameSystem.Flowerbook
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             playerInput.SwitchCurrentActionMap("Player");
+            gameIsDone = true;
         }
 
         protected override void OpenUI()

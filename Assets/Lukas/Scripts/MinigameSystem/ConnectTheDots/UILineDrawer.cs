@@ -11,7 +11,6 @@ namespace Scripts.MinigameSystem.ConnectTheDots
 
         public void DrawLine(Vector2 _from, Vector2 _to)
         {
-            
             Debug.Log("Start: " + _from + ", To: " + _to);
             var lineObject = Instantiate(linePrefab, groupingTransform);
             lineObjects.Add(lineObject);
@@ -20,13 +19,13 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             rectTransform.localScale = Vector3.one;
             rectTransform.anchoredPosition3D = Vector3.zero;
             rectTransform.localRotation = Quaternion.identity;
-            
+
             var direction = (_to - _from);
             float distance = direction.magnitude;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
 
-            rectTransform.sizeDelta = new Vector2(distance, 5f);
-            rectTransform.pivot = new Vector2(0, 0.5f);
+            rectTransform.sizeDelta = new Vector2(10f, distance);
+            rectTransform.pivot = new Vector2(0.5f, 0);
             rectTransform.anchoredPosition = _from;
             rectTransform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
@@ -44,6 +43,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             {
                 Destroy(lineObject);
             }
+
             lineObjects.Clear();
         }
     }

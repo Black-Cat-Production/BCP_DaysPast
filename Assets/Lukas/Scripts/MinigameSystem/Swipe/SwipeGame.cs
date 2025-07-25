@@ -24,6 +24,7 @@ namespace Scripts.MinigameSystem.Swipe
 
         public override void Play()
         {
+            if (gameIsDone) return; 
             OpenUI();
             playerInput.enabled = false;
             Cursor.visible = true;
@@ -36,6 +37,7 @@ namespace Scripts.MinigameSystem.Swipe
             playerInput.enabled = true;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            gameIsDone = true;
         }
 
         protected override void OpenUI()

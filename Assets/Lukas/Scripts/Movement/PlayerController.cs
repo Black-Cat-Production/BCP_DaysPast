@@ -68,10 +68,8 @@ namespace Scripts.Movement
         void Start()
         {
             if (isMainHub) return;
-            cinemachineBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 1);
             firstPersonCamera.MoveToTopOfPrioritySubqueue();
             cinemachineBrain.ManualUpdate();
-            cinemachineBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Linear, 2);
             
         }
 

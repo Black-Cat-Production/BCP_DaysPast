@@ -129,6 +129,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
 
         public override void Play()
         {
+            if (gameIsDone) return;
             OpenUI();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -143,6 +144,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             playerInput.enabled = true;
+            gameIsDone = true;
         }
 
         //Function is used by unity button.
