@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Lukas/Scenes/MainDevScene.unity
     guid: 4b99f9feacb856d4bbf0c2185b3a13f7
+  - enabled: 1
+    path: Assets/Lukas/Scenes/PauseScene.unity
+    guid: 7ffac43c8ade8e748ac3d2e01e0e63b5
   m_configObjects: {}

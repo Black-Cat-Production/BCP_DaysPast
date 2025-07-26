@@ -1,6 +1,8 @@
 using System;
 using Cinemachine;
 using Scripts.MinigameSystem.Memory;
+using Scripts.Scriptables.SceneLoader;
+using Scripts.Scriptables.Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +15,11 @@ namespace Scripts.Movement
         Rigidbody playerRigidbody;
 
         float xRotation;
+
+        [Header("Game Settings")]
+        [SerializeField] SettingsSO settings;
+
+        [SerializeField] SceneLoader pauseMenuLoader;
 
         [Header("Camera Settings")]
         [SerializeField] bool isMainHub;
@@ -52,7 +59,9 @@ namespace Scripts.Movement
         SwapBlocker swapBlocker;
 
         public Action<float> OnScroll;
-        
+
+        public bool IsPaused;
+
         void Awake()
         {
             swapBlocker = new SwapBlocker();
@@ -70,7 +79,6 @@ namespace Scripts.Movement
             if (isMainHub) return;
             firstPersonCamera.MoveToTopOfPrioritySubqueue();
             cinemachineBrain.ManualUpdate();
-            
         }
 
         void FixedUpdate()
@@ -80,14 +88,15 @@ namespace Scripts.Movement
 
         public void FP_Look(InputAction.CallbackContext _callbackContext)
         {
+            if (IsPaused) return;
             if (!isMainHub)
             {
                 if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera != firstPersonCamera || cinemachineBrain.IsBlending) return;
             }
 
             playerLook = _callbackContext.ReadValue<Vector2>();
-            float lookX = playerLook.x * lookSensitivity;
-            float lookY = playerLook.y * lookSensitivity;
+            float lookX = playerLook.x * (lookSensitivity * settings.MouseSensitivity);
+            float lookY = playerLook.y * (lookSensitivity * settings.MouseSensitivity);
 
             xRotation -= lookY;
             xRotation = Mathf.Clamp(xRotation, -cameraClampAngle, cameraClampAngle);
@@ -107,6 +116,7 @@ namespace Scripts.Movement
 
         public void TP_Look(InputAction.CallbackContext _callbackContext)
         {
+            if (isMainHub || IsPaused) return;
             cinemachineInputProvider.enabled = _callbackContext.phase switch
             {
                 InputActionPhase.Started => true,
@@ -118,13 +128,17 @@ namespace Scripts.Movement
         public void Move(InputAction.CallbackContext _callbackContext)
         {
             moveInput = _callbackContext.ReadValue<Vector2>();
-            if (moveInput == Vector2.right) animator.SetTrigger("TurnR");
-            if (moveInput == Vector2.left) animator.SetTrigger("TurnL");
+            if (IsThirdPersonActive())
+            {
+                if (moveInput == Vector2.right) animator.SetTrigger("TurnR");
+                if (moveInput == Vector2.left) animator.SetTrigger("TurnL");
+            }
             animator.SetBool("IsWalking", moveInput.magnitude > Vector2.zero.magnitude);
         }
 
         void DoMove()
         {
+            if (IsPaused) return;
             if (!isMainHub)
             {
                 if (cinemachineBrain.IsBlending || moveInput.sqrMagnitude < 0.01f)
@@ -228,6 +242,14 @@ namespace Scripts.Movement
         {
             float yDelta = _context.ReadValue<Vector2>().y;
             OnScroll?.Invoke(yDelta);
+        }
+
+        public void PauseGame(InputAction.CallbackContext _context)
+        {
+            if (_context.phase != InputActionPhase.Started) return;
+            if (IsPaused) return;
+            IsPaused = true;
+            pauseMenuLoader.LoadSceneAdditive();
         }
     }
 }

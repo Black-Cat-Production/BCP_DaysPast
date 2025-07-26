@@ -4,6 +4,7 @@
     {
         MainMenu,
         MainHub,
-        Level
+        Level,
+        Pause
     }
 }

@@ -144,6 +144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bedede7dc025f5a4bab1452e1d4c6d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
+  pauseMenuLoader: {fileID: 11400000, guid: 0397d623962451c42bd4feb911f20a70, type: 2}
+  isMainHub: 0
   mainUnityCamera: {fileID: 0}
   cinemachineBrain: {fileID: 0}
   firstPersonCamera: {fileID: 1931807224631063879}
@@ -290,6 +293,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f6a83ce8-8bd0-48c4-ba3f-63fa0b95e218
     m_ActionName: MemoryGame/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 59245d7c-7396-4df1-9501-4544e99a26a4
+    m_ActionName: FlowerbookGame/Rotate[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4427996401326955038}
+        m_TargetAssemblyTypeName: Scripts.Movement.PlayerController, Assembly-CSharp
+        m_MethodName: PauseGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fc31b94e-ca40-4c53-934f-6c40bcb1070f
+    m_ActionName: Player/PauseGame[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

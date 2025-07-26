@@ -11,5 +11,10 @@ namespace Scripts.Scriptables.SceneLoader
         {
             SceneManager.LoadScene((int)sceneToLoad);
         }
+
+        public void LoadSceneAdditive()
+        {
+            SceneManager.LoadScene((int)sceneToLoad, LoadSceneMode.Additive);
+        }
     }
 }
