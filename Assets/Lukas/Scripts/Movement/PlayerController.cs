@@ -62,6 +62,8 @@ namespace Scripts.Movement
 
         public bool IsPaused;
 
+        bool isMoving;
+
         void Awake()
         {
             swapBlocker = new SwapBlocker();
@@ -128,11 +130,12 @@ namespace Scripts.Movement
         public void Move(InputAction.CallbackContext _callbackContext)
         {
             moveInput = _callbackContext.ReadValue<Vector2>();
-            if (IsThirdPersonActive())
-            {
-                if (moveInput == Vector2.right) animator.SetTrigger("TurnR");
-                if (moveInput == Vector2.left) animator.SetTrigger("TurnL");
-            }
+            //if (IsThirdPersonActive() && (moveInput == Vector2.right || moveInput == Vector2.left))
+            //{
+            //    if (moveInput == Vector2.right) animator.SetTrigger("TurnR");
+            //    if (moveInput == Vector2.left) animator.SetTrigger("TurnL");
+            //}
+            //else 
             animator.SetBool("IsWalking", moveInput.magnitude > Vector2.zero.magnitude);
         }
 
@@ -149,12 +152,13 @@ namespace Scripts.Movement
             }
 
             var input = new Vector3(moveInput.x, 0, moveInput.y);
+            //if ((input == Vector3.left || input == Vector3.right) && !isMoving ) return;
             var moveDirection = GetMoveDirection(input);
             ApplyMovementVelocity(moveDirection);
             if (isMainHub) return;
             if (IsThirdPersonActive())
             {
-                //RotateTowards(moveDirection);
+                RotateTowards(moveDirection);
             }
         }
 
@@ -183,12 +187,14 @@ namespace Scripts.Movement
             Debug.DrawRay(transform.position, _moveDirection * 2, Color.red, 0.1f);
 
             playerRigidbody.velocity = velocity;
+
+            animator.ResetTrigger("TurnL");
+            animator.ResetTrigger("TurnR");
         }
 
         void OnAnimatorMove()
         {
             if (!animator) return;
-            Debug.Log("Delta Rotation: " + animator.deltaRotation.eulerAngles);
             transform.rotation *= animator.deltaRotation;
         }
 
