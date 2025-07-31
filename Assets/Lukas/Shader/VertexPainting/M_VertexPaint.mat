@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_TestMaterial
+  m_Name: M_VertexPaint
   m_Shader: {fileID: -6465566751694194690, guid: 0add4cec641b2cb4fbd0c050f88f1160,
     type: 3}
   m_Parent: {fileID: 0}

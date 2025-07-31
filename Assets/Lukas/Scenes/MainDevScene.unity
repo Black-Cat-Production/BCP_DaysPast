@@ -1793,7 +1793,6 @@ GameObject:
   - component: {fileID: 444566161}
   - component: {fileID: 444566166}
   - component: {fileID: 444566167}
-  - component: {fileID: 444566169}
   - component: {fileID: 444566168}
   m_Layer: 0
   m_Name: TestInteractable3
@@ -1936,32 +1935,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 444566160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 133a0c19b296415d8f0a82a8d39bea4f, type: 3}
+  m_Script: {fileID: 11500000, guid: d8367bd4bc3a4fea9913e88a604a1b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groupingTransform: {fileID: 1844484715}
-  linePrefab: {fileID: 3271246646088141905, guid: 904dfcf37ac082e42aa5cc39fa142f7f,
-    type: 3}
-  lineObjects: []
---- !u!114 &444566169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444566160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d54b1d9028af4a3a895b97a8006bdc6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minigameUIGroup: {fileID: 1844484716}
+  swipeGameUI: {fileID: 1459285626}
+  leafs:
+  - {fileID: 1654126430}
+  - {fileID: 2005058019}
+  - {fileID: 1206419063}
+  - {fileID: 1721613381}
+  - {fileID: 653672236}
   playerInput: {fileID: 1290700939}
-  dots:
-  - {fileID: 194872935}
-  - {fileID: 1548362733}
-  - {fileID: 1658843471}
-  - {fileID: 1776227853}
 --- !u!1 &467721949
 GameObject:
   m_ObjectHideFlags: 0
