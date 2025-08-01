@@ -35,8 +35,9 @@ namespace Scripts.InteractionSystem
             interacted = true;
 
             if (!hasPrerequisites) return;
-            Debug.Log("Starting Mini-game or Story goes forward etc.");
             if(TryGetComponent(out Minigame minigame)) minigame.Play();
+            Debug.Log("Starting Mini-game or Story goes forward etc.");
+            if (resolved) return;
             ContinueMainItem();
         }
 

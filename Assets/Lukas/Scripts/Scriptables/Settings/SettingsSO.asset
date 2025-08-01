@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: SettingsSO
   m_EditorClassIdentifier: 
   SubtitlesOn: 0
+  MouseSensitivity: 1
+  MasterVolume: 0
+  MusicVolume: 0
+  SfxVolume: 0
+  DialogueVolume: 0

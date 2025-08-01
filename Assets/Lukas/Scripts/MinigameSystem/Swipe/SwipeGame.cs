@@ -5,6 +5,7 @@ using Scripts.MinigameSystem.Flowerbook;
 using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Scripts.MinigameSystem.Swipe
 {
@@ -60,15 +61,17 @@ namespace Scripts.MinigameSystem.Swipe
         {
             leafs.Remove(_leaf);
             _leaf.OnSwipe -= Swipe;
-            var direction = _leaf.swipedDirection.normalized;
+            var direction = _leaf.SwipedDirection.normalized;
+            if(direction == Vector2.right) direction = new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f)).normalized;
             var startPos = _leaf.transform.position;
 
             float screenDiagonal = new Vector2(Screen.width, Screen.height).magnitude;
-            var targetPos = startPos + (Vector3)(direction * (screenDiagonal * 1.5f));
+            var targetPos = startPos + (Vector3)(direction * (screenDiagonal * 2f));
             
             yield return OverTimeMovement.MoveOverTime(startPos, targetPos, 2f, _pos => _leaf.transform.position = _pos);
             Destroy(_leaf.gameObject);
-            if (leafs.Count == 0) EndGame();
+            yield return null;
+            if (leafs.Count == 0 && _leaf == null) EndGame();
         }
     }
 }
