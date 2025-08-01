@@ -64,7 +64,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RevealAmount: 1
+    - _RevealAmount: 0.5
     - _RevealPercent: 0
     m_Colors: []
   m_BuildTextureStacks: []

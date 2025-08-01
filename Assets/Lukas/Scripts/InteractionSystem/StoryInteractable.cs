@@ -7,6 +7,7 @@ namespace Scripts.InteractionSystem
 {
     public class StoryInteractable : Interactable
     {
+        bool hasContinuedMain = false;
         protected override void Awake()
         {
             base.Awake();
@@ -36,9 +37,10 @@ namespace Scripts.InteractionSystem
 
             if (!hasPrerequisites) return;
             if(TryGetComponent(out Minigame minigame)) minigame.Play();
+            if (hasContinuedMain) return;
             Debug.Log("Starting Mini-game or Story goes forward etc.");
-            if (resolved) return;
             ContinueMainItem();
+            hasContinuedMain = true;
         }
 
         public override bool CheckPrerequisites()

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Scripts.DialogueSystem;
 using Scripts.Scriptables.SceneLoader;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Scripts.InteractionSystem
 {
     public class MainInteractable : MonoBehaviour, IInteractable
     {
+        static readonly int revealAmount = Shader.PropertyToID("_RevealAmount");
         [SerializeField] protected List<Interactable> prerequisites;
         [SerializeField] [TextArea] protected string voiceLine1;
         [SerializeField] [TextArea] protected string voiceLine2;
@@ -25,8 +23,11 @@ namespace Scripts.InteractionSystem
 
         readonly List<string> voiceLines = new List<string>();
 
+        Material shaderMaterial;
+
         protected virtual void Awake()
         {
+            shaderMaterial = GetComponentInChildren<MeshRenderer>().material;
             voiceLines.Add(voiceLine1);
             voiceLines.Add(voiceLine2);
             voiceLines.Add(voiceLine3);
@@ -39,6 +40,7 @@ namespace Scripts.InteractionSystem
             {
                 voiceLines.Remove(line);
             }
+            UpdateShader();
         }
 
         void OnEnable()
@@ -61,6 +63,7 @@ namespace Scripts.InteractionSystem
         {
             stepCount++;
             Debug.Log($"Step {stepCount}");
+            UpdateShader();
             if (stepCount <= voiceLines.Count - 1) return;
             Debug.LogError("MainItem steps got too high!");
             stepCount--;
@@ -78,6 +81,12 @@ namespace Scripts.InteractionSystem
         void PlayVoiceLine(int _voiceLineIndex)
         {
             Debug.Log(voiceLines[_voiceLineIndex]);
+        }
+
+        void UpdateShader()
+        {
+            float calculatedStep = stepCount / (float)voiceLines.Count;
+            shaderMaterial.SetFloat(revealAmount, calculatedStep);
         }
     }
 }
