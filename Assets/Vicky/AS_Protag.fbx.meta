@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: old walk anim
+      name: walk anim
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
@@ -65,7 +65,7 @@ ModelImporter:
       name: 180 turn anim
       takeName: Take 001
       internalID: -998496362607748373
-      firstFrame: 279
+      firstFrame: 270
       lastFrame: 324
       wrapMode: 0
       orientationOffsetY: 0
