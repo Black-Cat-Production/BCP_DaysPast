@@ -130,12 +130,6 @@ namespace Scripts.Movement
         public void Move(InputAction.CallbackContext _callbackContext)
         {
             moveInput = _callbackContext.ReadValue<Vector2>();
-            //if (IsThirdPersonActive() && (moveInput == Vector2.right || moveInput == Vector2.left))
-            //{
-            //    if (moveInput == Vector2.right) animator.SetTrigger("TurnR");
-            //    if (moveInput == Vector2.left) animator.SetTrigger("TurnL");
-            //}
-            //else 
             animator.SetBool("IsWalking", moveInput.magnitude > Vector2.zero.magnitude);
         }
 
@@ -152,7 +146,6 @@ namespace Scripts.Movement
             }
 
             var input = new Vector3(moveInput.x, 0, moveInput.y);
-            //if ((input == Vector3.left || input == Vector3.right) && !isMoving ) return;
             var moveDirection = GetMoveDirection(input);
             ApplyMovementVelocity(moveDirection);
             if (isMainHub) return;
@@ -223,6 +216,7 @@ namespace Scripts.Movement
                 mainUnityCamera.cullingMask = thirdPersonCullingMask;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), false);
+                cinemachineInputProvider.enabled = true;
             }
             else if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera && !swapBlocker.GetSwapBlocked(transform, firstPersonBlockingMask))
             {
@@ -231,6 +225,7 @@ namespace Scripts.Movement
                 mainUnityCamera.cullingMask = firstPersonCullingMask;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), false);
+                cinemachineInputProvider.enabled = false;
             }
         }
 
@@ -255,7 +250,15 @@ namespace Scripts.Movement
             if (_context.phase != InputActionPhase.Started) return;
             if (IsPaused) return;
             IsPaused = true;
+            cinemachineInputProvider.enabled = false;
             pauseMenuLoader.LoadSceneAdditive();
+        }
+
+        public void Unpause()
+        {
+            if (!IsPaused) return;
+            IsPaused = false;
+            cinemachineInputProvider.enabled = true;
         }
     }
 }

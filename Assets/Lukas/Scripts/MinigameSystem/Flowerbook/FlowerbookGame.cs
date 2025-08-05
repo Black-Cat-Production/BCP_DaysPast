@@ -27,10 +27,10 @@ namespace Scripts.MinigameSystem.Flowerbook
         public override void Play()
         {
             if (gameIsDone) return;
-            OpenUI();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             playerInput.SwitchCurrentActionMap("FlowerbookGame");
+            StartCoroutine(StartGameRoutine());
             
         }
 
@@ -90,11 +90,11 @@ namespace Scripts.MinigameSystem.Flowerbook
 
         protected override void EndGame()
         {
-            CloseUI();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             playerInput.SwitchCurrentActionMap("Player");
             gameIsDone = true;
+            StartCoroutine(EndGameRoutine());
         }
 
         protected override void OpenUI()

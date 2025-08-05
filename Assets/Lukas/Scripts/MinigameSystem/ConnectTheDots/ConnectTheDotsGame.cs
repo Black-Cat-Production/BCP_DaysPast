@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Scripts.Utility;
@@ -130,22 +131,24 @@ namespace Scripts.MinigameSystem.ConnectTheDots
         public override void Play()
         {
             if (gameIsDone) return;
-            OpenUI();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             playerInput.enabled = false;
+            StartCoroutine(StartGameRoutine());
         }
+        
 
         protected override void EndGame()
         {
             lineDrawer.ClearLinesFromScene();
             lineSegments.Clear();
-            CloseUI();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             playerInput.enabled = true;
             gameIsDone = true;
+            StartCoroutine(EndGameRoutine());
         }
+        
 
         //Function is used by unity button.
         public void ResetGame()

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: S_BlackoutShader
+  m_Name: M_BlackoutShader
   m_Shader: {fileID: -6465566751694194690, guid: a21025e85d06ebc458243db4737d907e,
     type: 3}
   m_Parent: {fileID: 0}
@@ -64,7 +64,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RevealAmount: 0.5
+    - _RevealAmount: 0
     - _RevealPercent: 0
     m_Colors: []
   m_BuildTextureStacks: []

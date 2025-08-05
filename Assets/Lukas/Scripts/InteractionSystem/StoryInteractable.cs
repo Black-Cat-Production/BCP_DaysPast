@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Scripts.DialogueSystem;
 using Scripts.MinigameSystem;
+using Scripts.UI.Subtitles;
 using UnityEngine;
 
 namespace Scripts.InteractionSystem
@@ -51,6 +52,8 @@ namespace Scripts.InteractionSystem
         public override void PlayVoiceLine(EVoiceLineType _voiceLineType)
         {
             Debug.Log(voiceLines[(int)_voiceLineType]);
+            SubtitleUI.Instance.DisplaySubtitle(voiceLines[(int)_voiceLineType]);
+            SubtitleUI.Instance.StartSubtitleTimer();
         }
 
         public override void ContinueMainItem()

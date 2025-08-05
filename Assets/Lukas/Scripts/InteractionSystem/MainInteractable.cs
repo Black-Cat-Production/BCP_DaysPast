@@ -17,6 +17,8 @@ namespace Scripts.InteractionSystem
         [SerializeField] [TextArea] protected string voiceLine6;
         [SerializeField] [TextArea] protected string voiceLineResolved;
 
+        [SerializeField] Canvas interactionIconCanvas;
+
         [SerializeField] SceneLoader mainHubLoader;
         
         int stepCount = 0;
@@ -76,6 +78,16 @@ namespace Scripts.InteractionSystem
             {
                 mainHubLoader.LoadScene();
             }
+        }
+
+        public void ShowInteractIcon()
+        {
+            interactionIconCanvas.gameObject.SetActive(true);
+        }
+
+        public void HideInteractIcon()
+        {
+            interactionIconCanvas.gameObject.SetActive(false);
         }
 
         void PlayVoiceLine(int _voiceLineIndex)

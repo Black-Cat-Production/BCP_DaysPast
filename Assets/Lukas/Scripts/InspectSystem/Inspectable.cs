@@ -30,6 +30,16 @@ namespace Scripts.InspectSystem
             gotInspected = true;
         }
 
+        public void ShowInteractIcon()
+        {
+            Debug.Log("No InteractIcon Logic! This might be okay!");
+        }
+
+        public void HideInteractIcon()
+        {
+            Debug.Log("No InteractIcon Logic! This might be okay!");
+        }
+
 
         // void Start()
         // {

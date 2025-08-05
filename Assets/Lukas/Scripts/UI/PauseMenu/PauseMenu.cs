@@ -22,7 +22,7 @@ namespace Scripts.UI.PauseMenu
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            playerController.IsPaused = false;
+            playerController.Unpause();
         }
 
         public void Resume()

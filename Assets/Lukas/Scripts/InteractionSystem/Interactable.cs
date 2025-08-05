@@ -13,6 +13,7 @@ namespace Scripts.InteractionSystem
         [SerializeField][TextArea] protected string voiceLine3;
         [SerializeField][TextArea] protected string voiceLine4;
         [SerializeField][TextArea] protected string voiceLineResolved;
+        [SerializeField] Canvas interactionIconCanvas;
 
         protected bool interacted;
         public bool Interacted => interacted;
@@ -40,5 +41,15 @@ namespace Scripts.InteractionSystem
         public abstract void PlayVoiceLine(EVoiceLineType _voiceLineType);
 
         public abstract void ContinueMainItem();
+
+        public void ShowInteractIcon()
+        {
+            interactionIconCanvas.gameObject.SetActive(true);
+        }
+
+        public void HideInteractIcon()
+        {
+            interactionIconCanvas.gameObject.SetActive(false);
+        }
     }
 }
