@@ -66,7 +66,7 @@ ModelImporter:
       takeName: Take 001
       internalID: -998496362607748373
       firstFrame: 279
-      lastFrame: 340
+      lastFrame: 324
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -94,8 +94,8 @@ ModelImporter:
       name: right turn anim
       takeName: Take 001
       internalID: 3060872287085348379
-      firstFrame: 451
-      lastFrame: 496
+      firstFrame: 419
+      lastFrame: 468
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -123,8 +123,8 @@ ModelImporter:
       name: Grab 1 anim
       takeName: Take 001
       internalID: 6641085478485924818
-      firstFrame: 380
-      lastFrame: 402
+      firstFrame: 345
+      lastFrame: 367
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -152,8 +152,8 @@ ModelImporter:
       name: grab 2 anim
       takeName: Take 001
       internalID: -5059006814000262888
-      firstFrame: 405
-      lastFrame: 447
+      firstFrame: 369
+      lastFrame: 415
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -178,7 +178,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Idle anim
+      name: Idle long anim
       takeName: Take 001
       internalID: 6234510843852800090
       firstFrame: 62
@@ -236,11 +236,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Idle Take 2
+      name: idle short anim
       takeName: Take 001
-      internalID: 1702301948168947093
-      firstFrame: 500
-      lastFrame: 561
+      internalID: 9093586079265926502
+      firstFrame: 484
+      lastFrame: 519
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
