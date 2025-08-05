@@ -52,6 +52,7 @@ namespace Scripts.InteractionSystem
         public override void PlayVoiceLine(EVoiceLineType _voiceLineType)
         {
             Debug.Log(voiceLines[(int)_voiceLineType]);
+            if (SubtitleUI.Instance == null) return;
             SubtitleUI.Instance.DisplaySubtitle(voiceLines[(int)_voiceLineType]);
             SubtitleUI.Instance.StartSubtitleTimer();
         }

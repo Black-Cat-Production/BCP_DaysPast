@@ -23,6 +23,11 @@ namespace Scripts.MinigameSystem
         
         protected IEnumerator StartGameRoutine()
         {
+            if (blackoutTransition == null)
+            {
+                OpenUI();
+                yield break;
+            }
             yield return StartCoroutine(blackoutTransition.TransitionToBlackout());
             OpenUI();
             yield return StartCoroutine(blackoutTransition.TransitionFromBlackout());
@@ -30,6 +35,11 @@ namespace Scripts.MinigameSystem
 
         protected IEnumerator EndGameRoutine()
         {
+            if (blackoutTransition == null)
+            {
+                CloseUI();
+                yield break;
+            }
             yield return StartCoroutine(blackoutTransition.TransitionToBlackout());
             CloseUI();
             yield return StartCoroutine(blackoutTransition.TransitionFromBlackout());
