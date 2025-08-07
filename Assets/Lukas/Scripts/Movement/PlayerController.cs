@@ -63,6 +63,7 @@ namespace Scripts.Movement
         public bool IsPaused;
 
         bool isMoving;
+        bool isTurning;
 
         void Awake()
         {
@@ -86,6 +87,10 @@ namespace Scripts.Movement
         void FixedUpdate()
         {
             DoMove();
+            if (!isTurning && playerRigidbody.velocity.magnitude > 0.1f)
+            {
+                animator.SetBool("IsWalking", true);
+            }
         }
 
         public void FP_Look(InputAction.CallbackContext _callbackContext)
@@ -129,8 +134,61 @@ namespace Scripts.Movement
 
         public void Move(InputAction.CallbackContext _callbackContext)
         {
+            if (_callbackContext.phase == InputActionPhase.Canceled)
+            {
+                animator.SetBool("IsWalking", false);
+            }
+
             moveInput = _callbackContext.ReadValue<Vector2>();
-            animator.SetBool("IsWalking", moveInput.magnitude > Vector2.zero.magnitude);
+            if (!IsThirdPersonActive()) return;
+            if (moveInput.sqrMagnitude < 0.01f) return;
+
+            var input = new Vector3(moveInput.x, 0f, moveInput.y);
+            var moveDirection = GetMoveDirection(input);
+
+            if (playerRigidbody.velocity.sqrMagnitude < 0.01f)
+            {
+                float angle = Vector3.SignedAngle(transform.forward, moveDirection, Vector3.up);
+
+                switch (angle)
+                {
+                    case > 45f and < 135f:
+                        animator.SetTrigger("TurnR");
+                        isTurning = true;
+                        animator.SetBool("IsWalking", false);
+                        return;
+                    case < -45f and > -135f:
+                        animator.SetTrigger("TurnL");
+                        isTurning = true;
+                        animator.SetBool("IsWalking", false);
+                        return;
+                    default:
+                    {
+                        if (Mathf.Abs(angle) >= 135f)
+                        {
+                            animator.SetTrigger("TurnAround");
+                            isTurning = true;
+                            animator.SetBool("IsWalking", false);
+                            return;
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            if (isTurning)
+            {
+                animator.SetBool("IsWalking", false);
+                return;
+            }
+
+            animator.SetBool("IsWalking", moveInput.magnitude > 0.1f);
+        }
+
+        public void EndIsTurning()
+        {
+            isTurning = false;
         }
 
         void DoMove()
@@ -147,6 +205,7 @@ namespace Scripts.Movement
 
             var input = new Vector3(moveInput.x, 0, moveInput.y);
             var moveDirection = GetMoveDirection(input);
+            if (isTurning) return;
             ApplyMovementVelocity(moveDirection);
             if (isMainHub) return;
             if (IsThirdPersonActive())
@@ -258,6 +317,7 @@ namespace Scripts.Movement
         {
             if (!IsPaused) return;
             IsPaused = false;
+            if (cinemachineInputProvider == null) return;
             cinemachineInputProvider.enabled = true;
         }
     }
