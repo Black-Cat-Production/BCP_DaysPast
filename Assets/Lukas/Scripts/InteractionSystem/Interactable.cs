@@ -44,11 +44,13 @@ namespace Scripts.InteractionSystem
 
         public void ShowInteractIcon()
         {
+            if (interactionIconCanvas == null) return;
             interactionIconCanvas.gameObject.SetActive(true);
         }
 
         public void HideInteractIcon()
         {
+            if (interactionIconCanvas == null) return;
             interactionIconCanvas.gameObject.SetActive(false);
         }
     }

@@ -6,16 +6,20 @@ namespace Scripts.Audio
 {
     public class Soundtesting : MonoBehaviour
     {
-        StudioEventEmitter emitter;
-
+        DialogueAudioScript dialogueAudioScript;
+        
         void Awake()
         {
-            emitter = GetComponent<StudioEventEmitter>();
+            dialogueAudioScript = FindObjectOfType<DialogueAudioScript>();
+            
         }
 
-        void FixedUpdate()
+        void Update()
         {
-            if (!emitter.IsPlaying()) emitter.Play();
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+               dialogueAudioScript.PlayDialogue("00 Character Sounds/CSE_01");
+            }
         }
     }
 }
