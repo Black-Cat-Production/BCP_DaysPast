@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
+using FMODUnity;
 using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,6 +21,11 @@ namespace Scripts.MinigameSystem.Memory
         [SerializeField] float rotationMax;
         [SerializeField] float liftDuration;
         [SerializeField] float flipDuration;
+
+        [Header("Audio")]
+        [SerializeField] StudioEventEmitter turnEventEmitter;
+        [SerializeField] StudioEventEmitter clickEventEmitter;
+        [SerializeField] StudioEventEmitter pairEventEmitter;
 
         MemoryCard firstSelectedCard;
         Coroutine waitRoutine;
@@ -81,6 +87,7 @@ namespace Scripts.MinigameSystem.Memory
         {
             if (turnRoutine != null || waitRoutine != null) return;
             if (firstSelectedCard == null) firstSelectedCard = _card;
+            clickEventEmitter.Play();
             turnRoutine = StartCoroutine(TurnAroundRoutine(_card, false));
             if (firstSelectedCard == _card) return;
 
@@ -94,6 +101,7 @@ namespace Scripts.MinigameSystem.Memory
             yield return new WaitForSeconds(turnWaitTime);
             if (_isCorrect)
             {
+                pairEventEmitter.Play();
                 StartCoroutine(firstSelectedCard.RemoveFromBoard(0.4f, CalculateYCoord()));
                 yield return _card.RemoveFromBoard(0.7f, CalculateYCoord());
             }
@@ -128,6 +136,7 @@ namespace Scripts.MinigameSystem.Memory
 
             yield return OverTimeMovement.MoveOverTime(startPos, liftedPos, liftDuration, _pos => _card.transform.position = _pos);
 
+            turnEventEmitter.Play();
             yield return OverTimeMovement.MoveOverTime(startRot, endRot, flipDuration, _rot => _card.transform.rotation = _rot);
 
             yield return OverTimeMovement.MoveOverTime(liftedPos, startPos, liftDuration, _pos => _card.transform.position = _pos);

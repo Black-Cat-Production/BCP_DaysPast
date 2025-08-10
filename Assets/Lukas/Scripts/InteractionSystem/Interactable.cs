@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Scripts.DialogueSystem;
+using Scripts.Movement;
+using Scripts.Scriptables.Settings;
 using UnityEngine;
 
 namespace Scripts.InteractionSystem
@@ -13,7 +15,10 @@ namespace Scripts.InteractionSystem
         [SerializeField][TextArea] protected string voiceLine3;
         [SerializeField][TextArea] protected string voiceLine4;
         [SerializeField][TextArea] protected string voiceLineResolved;
+        [SerializeField][TextArea] protected string voiceLineWrongCamera;
         [SerializeField] Canvas interactionIconCanvas;
+        [SerializeField] protected SettingsSO settings;
+        [SerializeField] protected ECameraState targetCameraState;
 
         protected bool interacted;
         public bool Interacted => interacted;
@@ -27,8 +32,11 @@ namespace Scripts.InteractionSystem
 
         public Action OnInteracted;
 
+        protected PlayerController playerController;
+
         protected virtual void Awake()
         {
+            playerController = FindObjectOfType<PlayerController>();
             voiceLines.Add(voiceLine1);
             voiceLines.Add(voiceLine2);
             voiceLines.Add(voiceLine3);

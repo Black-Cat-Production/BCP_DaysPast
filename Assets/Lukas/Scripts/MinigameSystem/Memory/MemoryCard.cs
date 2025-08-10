@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Numerics;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Scripts.MinigameSystem.Memory

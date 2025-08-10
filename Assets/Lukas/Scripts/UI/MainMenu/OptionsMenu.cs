@@ -1,4 +1,5 @@
 ﻿using System;
+using FMOD.Studio;
 using Scripts.Scriptables.Settings;
 using UnityEngine;
 using UnityEngine.UI;
@@ -57,6 +58,48 @@ namespace Scripts.UI.MainMenu
             settings.MusicVolume = volumeMusicSlider.value;
             settings.SfxVolume = volumeSFXSlider.value;
             settings.DialogueVolume = volumeDialogueSlider.value;
+            UpdateFMODVolume();
+        }
+
+        void UpdateFMODVolume()
+        {
+            var musicBus = FMODUnity.RuntimeManager.GetBus("bus:/MUSIC");
+            musicBus.setVolume(volumeMusicSlider.value / 200f);
+            var sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
+            sfxBus.setVolume(volumeSFXSlider.value / 150f);
+            var dialogueBus = FMODUnity.RuntimeManager.GetBus("bus:/DIALOG");
+            dialogueBus.setVolume(volumeDialogueSlider.value / 150f);
+            var masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+            masterBus.setVolume(volumeMasterSlider.value / 100f);
+            
+            dialogueBus.getVolume(out var dialogueVolume);
+            sfxBus.getVolume(out var sfxVolume);
+            musicBus.getVolume(out var musicVolume);
+            Debug.Log("DialogVolume: " + dialogueVolume);
+            Debug.Log("SFXVolume: " + sfxVolume);
+            Debug.Log("MusicVolume: " + musicVolume);
+            
+            //FMODUnity.RuntimeManager.StudioSystem.getBankList(out var bankList);
+            //foreach (var bank in bankList)
+            //{
+            //    bank.getBusCount(out int busCount);
+            //    bank.getPath(out string path);
+            //    if(busCount == 0) continue;
+            //    Debug.Log("Bank: " + path + " " + busCount);
+            //    bank.getBusList(out var busList);
+            //    foreach (var bus in busList)
+            //    {
+            //        bus.getPath(out string busPath);
+            //        //Debug.Log("Bus: " + busPath);
+            //        FMODUnity.RuntimeManager.StudioSystem.getBus(busPath, out Bus _bus);
+            //        Debug.Log("Got BUS: " + _bus.isValid());
+            //        if (_bus.isValid())
+            //        {
+            //            _bus.getVolume(out float volume);
+            //            Debug.Log("Volume: " + volume + "%");
+            //        }
+            //    }
+            //}
         }
     }
 }

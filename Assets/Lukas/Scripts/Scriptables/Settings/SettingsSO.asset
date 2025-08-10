@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5ac506678454a76b3dae9c7e3e50469, type: 3}
   m_Name: SettingsSO
   m_EditorClassIdentifier: 
-  SubtitlesOn: 0
+  SubtitlesOn: 1
   MouseSensitivity: 1
-  MasterVolume: 0
-  MusicVolume: 0
-  SfxVolume: 0
-  DialogueVolume: 0
+  MasterVolume: 100
+  MusicVolume: 100
+  SfxVolume: 100
+  DialogueVolume: 50

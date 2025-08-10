@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using Scripts.Audio.AudioManager;
 using Scripts.Utility;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Scripts.MinigameSystem
 {
@@ -10,10 +12,14 @@ namespace Scripts.MinigameSystem
         protected bool gameIsDone;
 
         protected BlackoutTransition blackoutTransition;
+        protected MinigameAudioHelper audioHelper;
 
-        protected void Awake()
+        [SerializeField] Image fakeVolumeImage;
+
+        protected virtual void Awake()
         {
             blackoutTransition = FindObjectOfType<BlackoutTransition>();
+            audioHelper = FindObjectOfType<MinigameAudioHelper>();
         }
 
         public abstract void Play();
@@ -28,9 +34,10 @@ namespace Scripts.MinigameSystem
                 OpenUI();
                 yield break;
             }
-            yield return StartCoroutine(blackoutTransition.TransitionToBlackout());
+            yield return StartCoroutine(blackoutTransition.TransitionToBlackout(fakeVolumeImage));
             OpenUI();
-            yield return StartCoroutine(blackoutTransition.TransitionFromBlackout());
+            audioHelper.PlayStartAudio();
+            yield return StartCoroutine(blackoutTransition.TransitionFromBlackout(fakeVolumeImage));
         }
 
         protected IEnumerator EndGameRoutine()
@@ -40,9 +47,11 @@ namespace Scripts.MinigameSystem
                 CloseUI();
                 yield break;
             }
-            yield return StartCoroutine(blackoutTransition.TransitionToBlackout());
+            audioHelper.PlayEndAudio();
+            yield return new WaitWhile(audioHelper.EndAudioIsPlaying);
+            yield return StartCoroutine(blackoutTransition.TransitionToBlackout(fakeVolumeImage));
             CloseUI();
-            yield return StartCoroutine(blackoutTransition.TransitionFromBlackout());
+            yield return StartCoroutine(blackoutTransition.TransitionFromBlackout(fakeVolumeImage));
         }
     }
 }

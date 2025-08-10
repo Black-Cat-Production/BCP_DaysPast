@@ -2,21 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FMODUnity;
 using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Scripts.MinigameSystem.ConnectTheDots
 {
     public class ConnectTheDotsGame : Minigame
     {
-        [SerializeField] CanvasGroup minigameUIGroup;
+        [SerializeField] CanvasGroup connectUIGroup;
         [SerializeField] PlayerInput playerInput;
         [SerializeField] List<Dot> dots = new List<Dot>();
         UILineDrawer lineDrawer;
         Dot selectedDot;
 
         Dot startDot;
+
+        StudioEventEmitter lineEventEmitter;
 
         public struct LineSegment
         {
@@ -32,8 +36,9 @@ namespace Scripts.MinigameSystem.ConnectTheDots
 
         readonly List<LineSegment> lineSegments = new List<LineSegment>();
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             lineDrawer = GetComponent<UILineDrawer>();
         }
 
@@ -43,6 +48,8 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             {
                 dot.OnClick += DotSelect;
             }
+
+            lineEventEmitter = connectUIGroup.GetComponent<StudioEventEmitter>();
         }
 
         void OnDisable()
@@ -52,7 +59,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
                 dot.OnClick -= DotSelect;
             }
         }
-        
+
         void DotSelect(Dot _dot)
         {
             if (selectedDot == null)
@@ -84,7 +91,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
 
             ConnectDot(start, end, newLineSegment, _dot);
         }
-        
+
         bool IsInvalidSelection(Dot _dot)
         {
             if (selectedDot.IsConnected) return true;
@@ -115,6 +122,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             lineDrawer.DrawLine(_start, _end);
             lineSegments.Add(_segment);
             selectedDot.Connect();
+            lineEventEmitter.Play();
 
             if (startDot == null)
                 startDot = selectedDot;
@@ -136,7 +144,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             playerInput.enabled = false;
             StartCoroutine(StartGameRoutine());
         }
-        
+
 
         protected override void EndGame()
         {
@@ -148,7 +156,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             gameIsDone = true;
             StartCoroutine(EndGameRoutine());
         }
-        
+
 
         //Function is used by unity button.
         public void ResetGame()
@@ -162,15 +170,15 @@ namespace Scripts.MinigameSystem.ConnectTheDots
                 dot.Disconnect();
             }
         }
-        
+
         protected override void OpenUI()
         {
-            minigameUIGroup.gameObject.SetActive(true);
+            connectUIGroup.gameObject.SetActive(true);
         }
 
         protected override void CloseUI()
         {
-            minigameUIGroup.gameObject.SetActive(false);
+            connectUIGroup.gameObject.SetActive(false);
         }
     }
 }

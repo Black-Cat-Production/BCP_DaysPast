@@ -4,7 +4,10 @@ using AOT;
 using FMOD;
 using FMOD.Studio;
 using FMODUnity;
+using Unity.VisualScripting;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Scripts.Audio
 {
@@ -13,6 +16,10 @@ namespace Scripts.Audio
         EVENT_CALLBACK dialogueCallback;
 
         public EventReference EventName;
+        public EventInstance DialogueInstance { get; private set; }
+
+
+        public static DialogueAudioScript Instance;
 
 #if UNITY_EDITOR
         void Reset()
@@ -20,6 +27,12 @@ namespace Scripts.Audio
             EventName = EventReference.Find("event:/Dialog/DIALOG_PI");
         }
 #endif
+
+        void Awake()
+        {
+            if (Instance == null) Instance = this;
+            else Destroy(gameObject);
+        }
 
         void Start()
         {
@@ -30,15 +43,21 @@ namespace Scripts.Audio
 
         public void PlayDialogue(string _key)
         {
-            var dialogueInstance = RuntimeManager.CreateInstance(EventName);
+            DialogueInstance.getPlaybackState(out var state);
+            if (state == PLAYBACK_STATE.PLAYING)
+            {
+                DialogueInstance.stop(STOP_MODE.IMMEDIATE);
+            }
+
+            DialogueInstance = RuntimeManager.CreateInstance(EventName);
 
             // Pin the key string in memory and pass a pointer through the user data
             var stringHandle = GCHandle.Alloc(_key);
-            dialogueInstance.setUserData(GCHandle.ToIntPtr(stringHandle));
+            DialogueInstance.setUserData(GCHandle.ToIntPtr(stringHandle));
 
-            dialogueInstance.setCallback(dialogueCallback);
-            dialogueInstance.start();
-            dialogueInstance.release();
+            DialogueInstance.setCallback(dialogueCallback);
+            DialogueInstance.start();
+            if (DialogueInstance.isValid()) DialogueInstance.release();
         }
 
         [MonoPInvokeCallback(typeof(EVENT_CALLBACK))]
@@ -81,6 +100,7 @@ namespace Scripts.Audio
                         var soundResult = RuntimeManager.CoreSystem.createSound(dialogueSoundInfo.name_or_data, soundMode | dialogueSoundInfo.mode, ref dialogueSoundInfo.exinfo, out var dialogueSound);
                         if (soundResult == RESULT.OK)
                         {
+                            
                             parameter.sound = dialogueSound.handle;
                             parameter.subsoundIndex = dialogueSoundInfo.subsoundindex;
                             Marshal.StructureToPtr(parameter, _parameterPtr, false);
@@ -93,7 +113,7 @@ namespace Scripts.Audio
                 {
                     var parameter = (PROGRAMMER_SOUND_PROPERTIES)Marshal.PtrToStructure(_parameterPtr, typeof(PROGRAMMER_SOUND_PROPERTIES));
                     var sound = new Sound(parameter.sound);
-                    sound.release();
+                    if (sound.hasHandle()) sound.release();
 
                     break;
                 }

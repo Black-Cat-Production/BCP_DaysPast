@@ -1,5 +1,6 @@
 using System;
 using Cinemachine;
+using Scripts.InteractionSystem;
 using Scripts.MinigameSystem.Memory;
 using Scripts.Scriptables.SceneLoader;
 using Scripts.Scriptables.Settings;
@@ -61,6 +62,7 @@ namespace Scripts.Movement
         public Action<float> OnScroll;
 
         public bool IsPaused;
+        public ECameraState CurrentCameraState { get; private set; }
 
         bool isMoving;
         bool isTurning;
@@ -75,6 +77,7 @@ namespace Scripts.Movement
             mainUnityCamera.cullingMask = firstPersonCullingMask;
             cinemachineInputProvider = thirdPersonCamera.GetComponent<CinemachineInputProvider>();
             cinemachineInputProvider.enabled = false;
+            CurrentCameraState = ECameraState.FirstPerson;
         }
 
         void Start()
@@ -276,6 +279,7 @@ namespace Scripts.Movement
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), false);
                 cinemachineInputProvider.enabled = true;
+                CurrentCameraState = ECameraState.ThirdPerson;
             }
             else if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera && !swapBlocker.GetSwapBlocked(transform, firstPersonBlockingMask))
             {
@@ -285,6 +289,7 @@ namespace Scripts.Movement
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), false);
                 cinemachineInputProvider.enabled = false;
+                CurrentCameraState = ECameraState.FirstPerson;
             }
         }
 
@@ -309,7 +314,7 @@ namespace Scripts.Movement
             if (_context.phase != InputActionPhase.Started) return;
             if (IsPaused) return;
             IsPaused = true;
-            cinemachineInputProvider.enabled = false;
+            if(cinemachineInputProvider != null) cinemachineInputProvider.enabled = false;
             pauseMenuLoader.LoadSceneAdditive();
         }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.MinigameSystem.Memory;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Scripts.InteractionSystem
@@ -9,7 +10,9 @@ namespace Scripts.InteractionSystem
         
         void OnTriggerEnter(Collider _other)
         {
+            if (_other.TryGetComponent(out MemoryCard _)) return;
             interactable = _other.GetComponent<IInteractable>();
+            if(interactable != null) Debug.Log("Entered: " + _other.gameObject.name);
         }
 
         public void Interact(InputAction.CallbackContext _callbackContext)
@@ -20,8 +23,12 @@ namespace Scripts.InteractionSystem
 
         void OnTriggerExit(Collider _other)
         {
+            if (_other.TryGetComponent(out MemoryCard _)) return;
             var exitedCollider = _other.GetComponent<IInteractable>();
-            if(exitedCollider == interactable) interactable = null;
+            if (exitedCollider != interactable || exitedCollider == null || interactable == null) return;
+            Debug.Log("Interactable: " + interactable);
+            Debug.Log("Exited: " + _other.gameObject.name);
+            interactable = null;
         }
     }
 }

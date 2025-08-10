@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FMODUnity;
 using Scripts.Movement;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace Scripts.MinigameSystem.Flowerbook
 
         RectTransform selectedLeaf;
         PlayerController playerController;
+        StudioEventEmitter placementEventEmitter;
 
         public override void Play()
         {
@@ -36,6 +38,7 @@ namespace Scripts.MinigameSystem.Flowerbook
 
         void OnEnable()
         {
+            placementEventEmitter = flowerbookUI.GetComponent<StudioEventEmitter>();
             playerController = playerInput.gameObject.GetComponent<PlayerController>();
             foreach (var leaf in leafs)
             {
@@ -73,6 +76,7 @@ namespace Scripts.MinigameSystem.Flowerbook
             {
                 _leaf.Place(leafSpot);
                 leafSpot.ActivateFilled();
+                placementEventEmitter.Play();
                 CheckWin();
                 return;
             }

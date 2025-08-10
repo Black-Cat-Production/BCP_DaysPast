@@ -32,6 +32,9 @@ namespace Scripts.UI.PauseMenu
 
         public void ReturnToMainMenu()
         {
+            FMODUnity.RuntimeManager.PauseAllEvents(true);
+            FMODUnity.RuntimeManager.CoreSystem.update();
+            FMODUnity.RuntimeManager.StudioSystem.update();
             mainMenuLoader.LoadScene();
             SceneManager.UnloadSceneAsync("PauseScene");
         }

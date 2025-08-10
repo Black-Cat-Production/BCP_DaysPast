@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Scripts.Audio;
 using Scripts.DialogueSystem;
 using Scripts.MinigameSystem;
 using Scripts.UI.Subtitles;
@@ -9,6 +10,7 @@ namespace Scripts.InteractionSystem
     public class StoryInteractable : Interactable
     {
         bool hasContinuedMain = false;
+
         protected override void Awake()
         {
             base.Awake();
@@ -24,6 +26,9 @@ namespace Scripts.InteractionSystem
 
         public override void Interact()
         {
+            if (playerController.CurrentCameraState != targetCameraState)
+            {
+            }
             bool hasPrerequisites = CheckPrerequisites();
 
             if (interactionMap.TryGetValue((interacted, hasPrerequisites), out var action))
@@ -34,10 +39,11 @@ namespace Scripts.InteractionSystem
             {
                 PlayVoiceLine(EVoiceLineType.Done);
             }
+
             interacted = true;
 
             if (!hasPrerequisites) return;
-            if(TryGetComponent(out Minigame minigame)) minigame.Play();
+            if (TryGetComponent(out Minigame minigame)) minigame.Play();
             if (hasContinuedMain) return;
             Debug.Log("Starting Mini-game or Story goes forward etc.");
             ContinueMainItem();
@@ -52,9 +58,9 @@ namespace Scripts.InteractionSystem
         public override void PlayVoiceLine(EVoiceLineType _voiceLineType)
         {
             Debug.Log(voiceLines[(int)_voiceLineType]);
-            if (SubtitleUI.Instance == null) return;
+            if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
             SubtitleUI.Instance.DisplaySubtitle(voiceLines[(int)_voiceLineType]);
-            SubtitleUI.Instance.StartSubtitleTimer();
+            SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
         }
 
         public override void ContinueMainItem()

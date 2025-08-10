@@ -606,6 +606,7 @@ GameObject:
   - component: {fileID: 154138922}
   - component: {fileID: 154138921}
   - component: {fileID: 154138920}
+  - component: {fileID: 154138923}
   m_Layer: 5
   m_Name: BackdropFlower
   m_TagString: Untagged
@@ -692,6 +693,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154138918}
   m_CullTransparentMesh: 1
+--- !u!114 &154138923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154138918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 29109049
+      Data2: 1304848939
+      Data3: -927390327
+      Data4: 1584342711
+    Path: event:/Minigames/Flowers/FLOWER_placing
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &171996498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7819,6 +7851,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1718550198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843376598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &1721613379
 GameObject:
   m_ObjectHideFlags: 0
@@ -9493,6 +9539,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1718550194}
+    - targetCorrespondingSourceObject: {fileID: 1688146962534439368, guid: c2b91435039fac241989b10dd1298c63,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1718550198}
   m_SourcePrefab: {fileID: 100100000, guid: c2b91435039fac241989b10dd1298c63, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
