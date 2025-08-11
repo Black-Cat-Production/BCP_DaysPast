@@ -41,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BC_A:
-        m_Texture: {fileID: 2800000, guid: 89fd1898e50026145982e6194c378614, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6bb50b26ca486ed498f1d7fcb337d788, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BC_B:
@@ -73,7 +73,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _N_A:
-        m_Texture: {fileID: 2800000, guid: a14a485f5687a9f4c9bb3ab8d86982f6, type: 3}
+        m_Texture: {fileID: 2800000, guid: bf9c099aefe6f99408c27c802e4d9226, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _N_B:
