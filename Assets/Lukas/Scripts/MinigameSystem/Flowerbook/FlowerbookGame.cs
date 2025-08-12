@@ -23,12 +23,12 @@ namespace Scripts.MinigameSystem.Flowerbook
         [SerializeField] float randomFlowerRotationMax;
 
         RectTransform selectedLeaf;
-        PlayerController playerController;
         StudioEventEmitter placementEventEmitter;
 
         public override void Play()
         {
             if (gameIsDone) return;
+            base.Play();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             playerInput.SwitchCurrentActionMap("FlowerbookGame");
@@ -39,7 +39,6 @@ namespace Scripts.MinigameSystem.Flowerbook
         void OnEnable()
         {
             placementEventEmitter = flowerbookUI.GetComponent<StudioEventEmitter>();
-            playerController = playerInput.gameObject.GetComponent<PlayerController>();
             foreach (var leaf in leafs)
             {
                 leaf.OnPlace += PlaceLeaf;
@@ -76,6 +75,7 @@ namespace Scripts.MinigameSystem.Flowerbook
             {
                 _leaf.Place(leafSpot);
                 leafSpot.ActivateFilled();
+                UpdateSelectedLeaf(false);
                 placementEventEmitter.Play();
                 CheckWin();
                 return;
@@ -94,6 +94,7 @@ namespace Scripts.MinigameSystem.Flowerbook
 
         protected override void EndGame()
         {
+            base.EndGame();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             playerInput.SwitchCurrentActionMap("Player");
@@ -113,6 +114,7 @@ namespace Scripts.MinigameSystem.Flowerbook
 
         void RotateFlower(float _yDelta)
         {
+            if (selectedLeaf == null) return;
             switch (_yDelta)
             {
                 case > 0:

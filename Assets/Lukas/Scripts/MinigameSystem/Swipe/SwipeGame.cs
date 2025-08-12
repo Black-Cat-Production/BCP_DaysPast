@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Scripts.InteractionSystem;
 using Scripts.MinigameSystem.Flowerbook;
 using Scripts.Utility;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Scripts.MinigameSystem.Swipe
         [SerializeField] CanvasGroup swipeGameUI;
         [SerializeField] List<SwipeableLeaf> leafs = new();
         [SerializeField] PlayerInput playerInput;
+        [SerializeField] InteractionIconDetector iconDetector;
         
         const float FlyOffDistance = 3f;
 
@@ -28,6 +30,8 @@ namespace Scripts.MinigameSystem.Swipe
         public override void Play()
         {
             if (gameIsDone) return; 
+            base.Play();
+            iconDetector.ChangeIconDisplayStatus(EIconDisplayState.HIDE);
             playerInput.enabled = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -37,6 +41,7 @@ namespace Scripts.MinigameSystem.Swipe
         protected override void EndGame()
         {
             if(gameIsDone) return;
+            base.EndGame();
             playerInput.enabled = true;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -52,6 +57,7 @@ namespace Scripts.MinigameSystem.Swipe
         protected override void CloseUI()
         {
             swipeGameUI.gameObject.SetActive(false);
+            iconDetector.ChangeIconDisplayStatus(EIconDisplayState.DISPLAY);
         }
 
         void Swipe(SwipeableLeaf _leaf)

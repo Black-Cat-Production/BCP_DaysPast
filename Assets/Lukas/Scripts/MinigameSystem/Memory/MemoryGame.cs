@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using FMODUnity;
+using Scripts.InteractionSystem;
 using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,7 @@ namespace Scripts.MinigameSystem.Memory
         [SerializeField] List<MemoryCard> cards = new List<MemoryCard>();
         [SerializeField] CinemachineVirtualCamera miniGameCam;
         [SerializeField] PlayerInput playerInput;
+        [SerializeField] InteractionIconDetector iconDetector;
         [SerializeField] Vector3 removedPosition;
         [SerializeField] float turnWaitTime;
         [SerializeField] float rotationMin;
@@ -27,6 +29,11 @@ namespace Scripts.MinigameSystem.Memory
         [SerializeField] StudioEventEmitter clickEventEmitter;
         [SerializeField] StudioEventEmitter pairEventEmitter;
 
+        [Header("Scene Logic")]
+        [SerializeField] GameObject originalMemoryObject;
+
+        [SerializeField] GameObject minigameMemoryObject;
+
         MemoryCard firstSelectedCard;
         Coroutine waitRoutine;
         Coroutine turnRoutine;
@@ -36,12 +43,16 @@ namespace Scripts.MinigameSystem.Memory
 
         void OnEnable()
         {
+            int subscribedCards = 0;
             foreach (var card in cards)
             {
                 card.OnFaceUp += CardSelect;
+                subscribedCards++;
                 float randomRota = Random.Range(rotationMin, rotationMax);
-                card.transform.rotation = Quaternion.Euler(card.transform.rotation.x, randomRota, -180);
+                card.transform.rotation = Quaternion.Euler(card.transform.rotation.x, randomRota + -184, 180);
             }
+
+            Debug.Log(subscribedCards);
         }
 
         void OnDisable()
@@ -64,16 +75,21 @@ namespace Scripts.MinigameSystem.Memory
         public override void Play()
         {
             if (isGameOver) return;
+            base.Play();
+            iconDetector.ChangeIconDisplayStatus(EIconDisplayState.HIDE);
             miniGameCam.gameObject.SetActive(true);
             miniGameCam.MoveToTopOfPrioritySubqueue();
             playerInput.SwitchCurrentActionMap("MemoryGame");
             Debug.Log(playerInput.currentActionMap.name);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            originalMemoryObject.SetActive(false);
+            minigameMemoryObject.SetActive(true);
         }
 
         protected override void EndGame()
         {
+            base.EndGame();
             miniGameCam.gameObject.SetActive(false);
             playerInput.SwitchCurrentActionMap("Player");
             Cursor.lockState = CursorLockMode.Locked;
@@ -81,6 +97,7 @@ namespace Scripts.MinigameSystem.Memory
             playerInput.enabled = true;
             playerInput.currentActionMap.Enable();
             isGameOver = true;
+            iconDetector.ChangeIconDisplayStatus(EIconDisplayState.DISPLAY);
         }
 
         void CardSelect(MemoryCard _card)
@@ -124,9 +141,11 @@ namespace Scripts.MinigameSystem.Memory
 
         IEnumerator TurnAroundRoutine(MemoryCard _card, bool _reverse)
         {
+            if (turnRoutine != null) yield break;
             var startRot = _card.transform.rotation;
             var endRot = Quaternion.Euler(0, _card.transform.eulerAngles.y, 0);
-            var startPos = _card.transform.position;
+            var startPos = _card.transform.localPosition;
+            Debug.Log(startPos);
             var liftedPos = startPos + Vector3.up / 4;
 
             if (_reverse)
@@ -134,12 +153,12 @@ namespace Scripts.MinigameSystem.Memory
                 endRot = Quaternion.Euler(0, _card.transform.eulerAngles.y, 180);
             }
 
-            yield return OverTimeMovement.MoveOverTime(startPos, liftedPos, liftDuration, _pos => _card.transform.position = _pos);
+            yield return OverTimeMovement.MoveOverTime(startPos, liftedPos, liftDuration, _pos => _card.transform.localPosition = _pos);
 
             turnEventEmitter.Play();
             yield return OverTimeMovement.MoveOverTime(startRot, endRot, flipDuration, _rot => _card.transform.rotation = _rot);
 
-            yield return OverTimeMovement.MoveOverTime(liftedPos, startPos, liftDuration, _pos => _card.transform.position = _pos);
+            yield return OverTimeMovement.MoveOverTime(liftedPos, startPos, liftDuration, _pos => _card.transform.localPosition = _pos);
 
             turnRoutine = null;
         }

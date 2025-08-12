@@ -1,4 +1,5 @@
-﻿using Scripts.MinigameSystem.Memory;
+﻿using System;
+using Scripts.MinigameSystem.Memory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,8 +12,9 @@ namespace Scripts.InteractionSystem
         void OnTriggerEnter(Collider _other)
         {
             if (_other.TryGetComponent(out MemoryCard _)) return;
-            interactable = _other.GetComponent<IInteractable>();
-            if(interactable != null) Debug.Log("Entered: " + _other.gameObject.name);
+            if (!_other.TryGetComponent(out IInteractable component)) return;
+            interactable = component;
+            Debug.Log("Entered: " + _other.gameObject.name);
         }
 
         public void Interact(InputAction.CallbackContext _callbackContext)

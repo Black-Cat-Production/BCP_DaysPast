@@ -26,8 +26,10 @@ namespace Scripts.InteractionSystem
 
         public override void Interact()
         {
-            if (playerController.CurrentCameraState != targetCameraState)
+            if (playerController.CurrentCameraState != targetCameraState && targetCameraState != ECameraState.Either)
             {
+                Debug.Log("Wrong Camera State Dialog!");
+                return;
             }
             bool hasPrerequisites = CheckPrerequisites();
 

@@ -31,12 +31,12 @@ namespace Scripts.MinigameSystem.Memory
         {
             IsRemoved = true;
             float elapsedTime = 0;
-            var currentPos = transform.position;
+            var currentPos = transform.localPosition;
             while (elapsedTime < _duration)
             {
                 elapsedTime += Time.deltaTime;
                 float t = elapsedTime / _duration;
-                transform.position = Vector3.Lerp(currentPos, _targetPosition, t);
+                transform.localPosition = Vector3.Lerp(currentPos, _targetPosition, t);
                 yield return null;
             }
         }

@@ -3,6 +3,7 @@
     public enum ECameraState
     {
         FirstPerson,
-        ThirdPerson
+        ThirdPerson,
+        Either
     }
 }

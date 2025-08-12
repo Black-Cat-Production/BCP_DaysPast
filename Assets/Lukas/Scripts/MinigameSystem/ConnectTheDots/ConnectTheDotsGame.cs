@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 namespace Scripts.MinigameSystem.ConnectTheDots
 {
+    [RequireComponent(typeof(UILineDrawer))]
     public class ConnectTheDotsGame : Minigame
     {
         [SerializeField] CanvasGroup connectUIGroup;
@@ -138,6 +139,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
 
         public override void Play()
         {
+            base.Play();
             if (gameIsDone) return;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -148,8 +150,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
 
         protected override void EndGame()
         {
-            lineDrawer.ClearLinesFromScene();
-            lineSegments.Clear();
+            base.EndGame();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             playerInput.enabled = true;
@@ -178,6 +179,8 @@ namespace Scripts.MinigameSystem.ConnectTheDots
 
         protected override void CloseUI()
         {
+            lineDrawer.ClearLinesFromScene();
+            lineSegments.Clear();
             connectUIGroup.gameObject.SetActive(false);
         }
     }

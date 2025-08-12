@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using Scripts.Audio.AudioManager;
+using Scripts.InteractionSystem;
+using Scripts.Movement;
 using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +13,9 @@ namespace Scripts.MinigameSystem
     {
         protected bool gameIsDone;
 
-        protected BlackoutTransition blackoutTransition;
-        protected MinigameAudioHelper audioHelper;
+        BlackoutTransition blackoutTransition;
+        MinigameAudioHelper audioHelper;
+        protected PlayerController playerController;
 
         [SerializeField] Image fakeVolumeImage;
 
@@ -20,13 +23,22 @@ namespace Scripts.MinigameSystem
         {
             blackoutTransition = FindObjectOfType<BlackoutTransition>();
             audioHelper = FindObjectOfType<MinigameAudioHelper>();
+            playerController = FindObjectOfType<PlayerController>();
         }
 
-        public abstract void Play();
-        protected abstract void EndGame();
+        public virtual void Play()
+        {
+            if (playerController.CurrentCameraState == ECameraState.ThirdPerson) playerController.CinemachineInputProvider.enabled = false;
+        }
+
+        protected virtual void EndGame()
+        {
+            if (playerController.CurrentCameraState == ECameraState.ThirdPerson) playerController.CinemachineInputProvider.enabled = true;
+        }
+
         protected abstract void OpenUI();
         protected abstract void CloseUI();
-        
+
         protected IEnumerator StartGameRoutine()
         {
             if (blackoutTransition == null)
@@ -34,6 +46,7 @@ namespace Scripts.MinigameSystem
                 OpenUI();
                 yield break;
             }
+
             yield return StartCoroutine(blackoutTransition.TransitionToBlackout(fakeVolumeImage));
             OpenUI();
             audioHelper.PlayStartAudio();
@@ -47,6 +60,7 @@ namespace Scripts.MinigameSystem
                 CloseUI();
                 yield break;
             }
+
             audioHelper.PlayEndAudio();
             yield return new WaitWhile(audioHelper.EndAudioIsPlaying);
             yield return StartCoroutine(blackoutTransition.TransitionToBlackout(fakeVolumeImage));

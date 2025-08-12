@@ -6,6 +6,8 @@ using Scripts.Scriptables.SceneLoader;
 using Scripts.Scriptables.Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 namespace Scripts.Movement
 {
@@ -33,7 +35,7 @@ namespace Scripts.Movement
         [SerializeField] CinemachineVirtualCamera thirdPersonCamera;
         [SerializeField] [Range(0, 90)] float cameraClampAngle;
         [SerializeField] float lookSensitivity = 2.0f;
-        CinemachineInputProvider cinemachineInputProvider;
+        public CinemachineInputProvider CinemachineInputProvider {get; private set;}
 
         [Header("Render Layer Settings")]
         [SerializeField] LayerMask firstPersonCullingMask;
@@ -75,8 +77,8 @@ namespace Scripts.Movement
             if (isMainHub) return;
             firstPersonCamera.MoveToTopOfPrioritySubqueue();
             mainUnityCamera.cullingMask = firstPersonCullingMask;
-            cinemachineInputProvider = thirdPersonCamera.GetComponent<CinemachineInputProvider>();
-            cinemachineInputProvider.enabled = false;
+            CinemachineInputProvider = thirdPersonCamera.GetComponent<CinemachineInputProvider>();
+            CinemachineInputProvider.enabled = false;
             CurrentCameraState = ECameraState.FirstPerson;
         }
 
@@ -90,7 +92,7 @@ namespace Scripts.Movement
         void FixedUpdate()
         {
             DoMove();
-            if (!isTurning && playerRigidbody.velocity.magnitude > 0.1f)
+            if (!isTurning && moveInput.magnitude > 0.1f)
             {
                 animator.SetBool("IsWalking", true);
             }
@@ -127,11 +129,11 @@ namespace Scripts.Movement
         public void TP_Look(InputAction.CallbackContext _callbackContext)
         {
             if (isMainHub || IsPaused) return;
-            cinemachineInputProvider.enabled = _callbackContext.phase switch
+            CinemachineInputProvider.enabled = _callbackContext.phase switch
             {
                 InputActionPhase.Started => true,
                 InputActionPhase.Canceled => false,
-                _ => cinemachineInputProvider.enabled
+                _ => CinemachineInputProvider.enabled
             };
         }
 
@@ -209,6 +211,7 @@ namespace Scripts.Movement
             var input = new Vector3(moveInput.x, 0, moveInput.y);
             var moveDirection = GetMoveDirection(input);
             if (isTurning) return;
+            
             ApplyMovementVelocity(moveDirection);
             if (isMainHub) return;
             if (IsThirdPersonActive())
@@ -240,7 +243,7 @@ namespace Scripts.Movement
             velocity.y = playerRigidbody.velocity.y;
 
             Debug.DrawRay(transform.position, _moveDirection * 2, Color.red, 0.1f);
-
+            isMoving = velocity != Vector3.zero;
             playerRigidbody.velocity = velocity;
 
             animator.ResetTrigger("TurnL");
@@ -278,7 +281,7 @@ namespace Scripts.Movement
                 mainUnityCamera.cullingMask = thirdPersonCullingMask;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), false);
-                cinemachineInputProvider.enabled = true;
+                CinemachineInputProvider.enabled = true;
                 CurrentCameraState = ECameraState.ThirdPerson;
             }
             else if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera && !swapBlocker.GetSwapBlocked(transform, firstPersonBlockingMask))
@@ -288,7 +291,7 @@ namespace Scripts.Movement
                 mainUnityCamera.cullingMask = firstPersonCullingMask;
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), false);
-                cinemachineInputProvider.enabled = false;
+                CinemachineInputProvider.enabled = false;
                 CurrentCameraState = ECameraState.FirstPerson;
             }
         }
@@ -296,10 +299,10 @@ namespace Scripts.Movement
         public void MemoryGameClick(InputAction.CallbackContext _callbackContext)
         {
             if (_callbackContext.phase != InputActionPhase.Started) return;
-            Physics.Raycast(mainUnityCamera.ScreenPointToRay(Input.mousePosition), out var hit, memoryCardLayer);
-            Debug.Log(hit.collider.gameObject.name);
+            Physics.Raycast(mainUnityCamera.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity, memoryCardLayer);
             var card = hit.collider.gameObject.GetComponentInParent<MemoryCard>();
             if (card == null) return;
+            Debug.Log(hit.collider.gameObject.name);
             card.Select();
         }
 
@@ -314,7 +317,7 @@ namespace Scripts.Movement
             if (_context.phase != InputActionPhase.Started) return;
             if (IsPaused) return;
             IsPaused = true;
-            if(cinemachineInputProvider != null) cinemachineInputProvider.enabled = false;
+            if(CinemachineInputProvider != null) CinemachineInputProvider.enabled = false;
             pauseMenuLoader.LoadSceneAdditive();
         }
 
@@ -322,8 +325,8 @@ namespace Scripts.Movement
         {
             if (!IsPaused) return;
             IsPaused = false;
-            if (cinemachineInputProvider == null) return;
-            cinemachineInputProvider.enabled = true;
+            if (CinemachineInputProvider == null) return;
+            CinemachineInputProvider.enabled = true;
         }
     }
 }
