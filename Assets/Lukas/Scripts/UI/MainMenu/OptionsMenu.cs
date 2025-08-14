@@ -64,13 +64,13 @@ namespace Scripts.UI.MainMenu
         void UpdateFMODVolume()
         {
             var musicBus = FMODUnity.RuntimeManager.GetBus("bus:/MUSIC");
-            musicBus.setVolume(volumeMusicSlider.value / 200f);
+            musicBus.setVolume(settings.MusicVolume / 200f);
             var sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
-            sfxBus.setVolume(volumeSFXSlider.value / 150f);
+            sfxBus.setVolume( settings.SfxVolume / 110f);
             var dialogueBus = FMODUnity.RuntimeManager.GetBus("bus:/DIALOG");
-            dialogueBus.setVolume(volumeDialogueSlider.value / 150f);
+            dialogueBus.setVolume(settings.DialogueVolume / 150f);
             var masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
-            masterBus.setVolume(volumeMasterSlider.value / 100f);
+            masterBus.setVolume(settings.MasterVolume / 100f);
             
             dialogueBus.getVolume(out var dialogueVolume);
             sfxBus.getVolume(out var sfxVolume);

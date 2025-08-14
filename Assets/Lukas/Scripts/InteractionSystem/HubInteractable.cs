@@ -3,6 +3,7 @@ using System.Collections;
 using FMOD.Studio;
 using Scripts.Audio;
 using Scripts.Scriptables.SceneLoader;
+using Scripts.Scriptables.Settings;
 using Scripts.UI.Subtitles;
 using Scripts.Utility;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Scripts.InteractionSystem
     public class HubInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField] SceneLoader levelLoader;
+        [SerializeField] SettingsSO settings;
 
         bool interacted = false;
         BlackoutTransition blackoutTransition;
@@ -31,8 +33,12 @@ namespace Scripts.InteractionSystem
 
         IEnumerator LoadLevel()
         {
-            SubtitleUI.Instance.DisplaySubtitle("Strange... I can hardly make out what this is supposed to be, but it feels.. familiar?");
-            SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Dynamic);
+            if (settings.SubtitlesOn)
+            {
+                SubtitleUI.Instance.DisplaySubtitle("Strange... I can hardly make out what this is supposed to be, but it feels.. familiar?");
+                SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Dynamic);
+            }
+
             yield return new WaitUntil(() =>
             {
                 DialogueAudioScript.Instance.DialogueInstance.getPlaybackState(out var state);
@@ -40,8 +46,12 @@ namespace Scripts.InteractionSystem
                 return state == PLAYBACK_STATE.STOPPED;
             });
             DialogueAudioScript.Instance.PlayDialogue("HICF_03");
-            SubtitleUI.Instance.DisplaySubtitle("Let's see what this is about!");
-            SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Dynamic);
+            if (settings.SubtitlesOn)
+            {
+                SubtitleUI.Instance.DisplaySubtitle("Let's see what this is about!");
+                SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Dynamic);
+            }
+
             yield return new WaitUntil(() =>
             {
                 DialogueAudioScript.Instance.DialogueInstance.getPlaybackState(out var state);

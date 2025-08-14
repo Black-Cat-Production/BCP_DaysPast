@@ -397,8 +397,10 @@ MonoBehaviour:
   voiceLine3: 
   voiceLine4: 
   voiceLineResolved: 
+  voiceLineWrongCamera: 
   interactionIconCanvas: {fileID: 0}
   settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
+  targetCameraState: 0
   keyPrefix: HIBED
   startIndex: 1
   maxIndex: 2
@@ -625,8 +627,10 @@ MonoBehaviour:
   voiceLine3: 
   voiceLine4: 
   voiceLineResolved: 
+  voiceLineWrongCamera: 
   interactionIconCanvas: {fileID: 0}
   settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
+  targetCameraState: 0
   keyPrefix: HICLOSET
   startIndex: 1
   maxIndex: 1
@@ -1645,6 +1649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 11400000, guid: 92d15f54c1ae35a4e92cf6b3c7b512c1, type: 2}
+  settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
 --- !u!65 &872051217
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2398,6 +2403,7 @@ GameObject:
   - component: {fileID: 1353049498}
   - component: {fileID: 1353049497}
   - component: {fileID: 1353049496}
+  - component: {fileID: 1353049499}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -2419,6 +2425,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startColor: {r: 1, g: 1, b: 1, a: 0}
   endColor: {r: 0, g: 0, b: 0, a: 0}
+  startSpriteColor: {r: 0, g: 0, b: 0, a: 0}
+  endSpriteColor: {r: 0, g: 0, b: 0, a: 0}
   duration: 2
 --- !u!114 &1353049497
 MonoBehaviour:
@@ -2452,6 +2460,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1353049499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353049495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd224d49fd83489c808aa0972ca1b28f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1415990490
 GameObject:
   m_ObjectHideFlags: 0
@@ -3722,8 +3742,10 @@ MonoBehaviour:
   voiceLine3: Glad I can sleep in tomorrow (sigh)
   voiceLine4: Glad I can sleep in tomorrow (sigh)
   voiceLineResolved: Glad I can sleep in tomorrow (sigh)
+  voiceLineWrongCamera: 
   interactionIconCanvas: {fileID: 0}
   settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
+  targetCameraState: 0
   keyPrefix: HICLOCK
   startIndex: 2
   maxIndex: 2
@@ -3768,8 +3790,10 @@ MonoBehaviour:
   voiceLine3: 
   voiceLine4: 
   voiceLineResolved: 
+  voiceLineWrongCamera: 
   interactionIconCanvas: {fileID: 0}
   settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
+  targetCameraState: 0
   keyPrefix: HIDOOR
   startIndex: 1
   maxIndex: 2

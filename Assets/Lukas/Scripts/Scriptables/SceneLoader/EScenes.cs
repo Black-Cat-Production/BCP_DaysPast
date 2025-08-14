@@ -2,6 +2,7 @@
 {
     public enum EScenes
     {
+        SplashScreen,
         MainMenu,
         MainHub,
         Level,

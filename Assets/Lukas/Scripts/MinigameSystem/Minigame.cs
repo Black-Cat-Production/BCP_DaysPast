@@ -13,11 +13,11 @@ namespace Scripts.MinigameSystem
     {
         protected bool gameIsDone;
 
-        BlackoutTransition blackoutTransition;
-        MinigameAudioHelper audioHelper;
+        protected BlackoutTransition blackoutTransition;
+        protected MinigameAudioHelper audioHelper;
         protected PlayerController playerController;
 
-        [SerializeField] Image fakeVolumeImage;
+        [SerializeField] protected Image fakeVolumeImage;
 
         protected virtual void Awake()
         {
@@ -39,7 +39,7 @@ namespace Scripts.MinigameSystem
         protected abstract void OpenUI();
         protected abstract void CloseUI();
 
-        protected IEnumerator StartGameRoutine()
+        protected virtual IEnumerator StartGameRoutine()
         {
             if (blackoutTransition == null)
             {
@@ -53,7 +53,7 @@ namespace Scripts.MinigameSystem
             yield return StartCoroutine(blackoutTransition.TransitionFromBlackout(fakeVolumeImage));
         }
 
-        protected IEnumerator EndGameRoutine()
+        protected virtual IEnumerator EndGameRoutine()
         {
             if (blackoutTransition == null)
             {

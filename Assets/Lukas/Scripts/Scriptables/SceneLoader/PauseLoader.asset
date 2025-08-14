@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ed0bf3fc1d4abf8e3f563b3883cadd, type: 3}
   m_Name: PauseLoader
   m_EditorClassIdentifier: 
-  sceneToLoad: 3
+  sceneToLoad: 4

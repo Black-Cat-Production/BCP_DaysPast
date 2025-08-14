@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using Scripts.UI.Subtitles;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Audio.AudioManager
 {
@@ -9,7 +6,7 @@ namespace Scripts.Audio.AudioManager
     {
         void Start()
         {
-            DialogueAudioScript.Instance.PlayDialogue("HE_01");
+            //DialogueAudioScript.Instance.PlayDialogue("HE_01");
         }
 
     }

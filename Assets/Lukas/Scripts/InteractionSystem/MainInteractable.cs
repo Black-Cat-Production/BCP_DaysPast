@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Scripts.Scriptables.SceneLoader;
+using Scripts.Scriptables.Settings;
+using Scripts.UI.Subtitles;
+using Scripts.Utility;
 using UnityEngine;
 
 namespace Scripts.InteractionSystem
@@ -17,6 +21,7 @@ namespace Scripts.InteractionSystem
         [SerializeField] Canvas interactionIconCanvas;
 
         [SerializeField] SceneLoader mainHubLoader;
+        [SerializeField] SettingsSO settings;
         
         int stepCount = 0;
 
@@ -72,8 +77,15 @@ namespace Scripts.InteractionSystem
             if(stepCount == 0) stepCount = 1;
             if (stepCount == fullStepCount)
             {
-                mainHubLoader.LoadScene();
+                StartCoroutine(LoadMainMenu());
             }
+        }
+
+        IEnumerator LoadMainMenu()
+        {
+            var blackoutTransition = FindObjectOfType<BlackoutTransition>();
+            yield return blackoutTransition.TransitionToBlackout();
+            mainHubLoader.LoadScene();
         }
 
         public void ShowInteractIcon()
@@ -91,13 +103,20 @@ namespace Scripts.InteractionSystem
             switch (_voiceLineIndex)
             {
                 case 0:
-                    Debug.Log(firstInteraction_01 + "___" + firstInteraction_02);
+                    if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
+                    SubtitleUI.Instance.DisplaySubtitle(firstInteraction_01 + "___" + firstInteraction_02);
+                    SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
                     break;
                 case >= 1 and < 7:
-                    Debug.Log(voiceLines[2]);
+                    if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
+                    SubtitleUI.Instance.DisplaySubtitle(voiceLines[2]);
+                    SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
                     break;
                 case 7:
                     Debug.Log("RESOLVED");
+                    if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
+                    SubtitleUI.Instance.DisplaySubtitle("RESOLVED");
+                    SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
                     break;
             }
         }

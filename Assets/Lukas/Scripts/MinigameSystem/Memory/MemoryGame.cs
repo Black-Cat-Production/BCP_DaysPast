@@ -77,6 +77,13 @@ namespace Scripts.MinigameSystem.Memory
             if (isGameOver) return;
             base.Play();
             iconDetector.ChangeIconDisplayStatus(EIconDisplayState.HIDE);
+            StartCoroutine(StartGameRoutine());
+            
+        }
+
+        protected override IEnumerator StartGameRoutine()
+        {
+            yield return StartCoroutine(blackoutTransition.TransitionToBlackout(fakeVolumeImage));
             miniGameCam.gameObject.SetActive(true);
             miniGameCam.MoveToTopOfPrioritySubqueue();
             playerInput.SwitchCurrentActionMap("MemoryGame");
@@ -85,11 +92,15 @@ namespace Scripts.MinigameSystem.Memory
             Cursor.visible = true;
             originalMemoryObject.SetActive(false);
             minigameMemoryObject.SetActive(true);
+            audioHelper.PlayStartAudio();
+            yield return StartCoroutine(blackoutTransition.TransitionFromBlackout(fakeVolumeImage));
         }
 
-        protected override void EndGame()
+        protected override IEnumerator EndGameRoutine()
         {
-            base.EndGame();
+            audioHelper.PlayEndAudio();
+            yield return new WaitWhile(audioHelper.EndAudioIsPlaying);
+            yield return StartCoroutine(blackoutTransition.TransitionToBlackout(fakeVolumeImage));
             miniGameCam.gameObject.SetActive(false);
             playerInput.SwitchCurrentActionMap("Player");
             Cursor.lockState = CursorLockMode.Locked;
@@ -98,6 +109,14 @@ namespace Scripts.MinigameSystem.Memory
             playerInput.currentActionMap.Enable();
             isGameOver = true;
             iconDetector.ChangeIconDisplayStatus(EIconDisplayState.DISPLAY);
+            yield return StartCoroutine(blackoutTransition.TransitionFromBlackout(fakeVolumeImage));
+        }
+
+        protected override void EndGame()
+        {
+            base.EndGame();
+            StartCoroutine(EndGameRoutine());
+            
         }
 
         void CardSelect(MemoryCard _card)
@@ -165,12 +184,12 @@ namespace Scripts.MinigameSystem.Memory
 
         protected override void OpenUI()
         {
-            throw new System.NotImplementedException();
+           
         }
 
         protected override void CloseUI()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

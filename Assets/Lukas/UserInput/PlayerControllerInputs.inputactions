@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TP_LookEnable",
-                    "type": "Button",
-                    "id": "b2629baa-7334-402f-a336-b9f2e3266815",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "PauseGame",
                     "type": "Button",
                     "id": "fc31b94e-ca40-4c53-934f-6c40bcb1070f",
@@ -146,17 +137,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9aff64eb-3453-466b-9887-016dddb5e6ae",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TP_LookEnable",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

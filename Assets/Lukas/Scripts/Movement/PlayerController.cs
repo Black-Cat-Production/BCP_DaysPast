@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using Scripts.InteractionSystem;
 using Scripts.MinigameSystem.Memory;
@@ -35,7 +36,7 @@ namespace Scripts.Movement
         [SerializeField] CinemachineVirtualCamera thirdPersonCamera;
         [SerializeField] [Range(0, 90)] float cameraClampAngle;
         [SerializeField] float lookSensitivity = 2.0f;
-        public CinemachineInputProvider CinemachineInputProvider {get; private set;}
+        public CinemachineInputProvider CinemachineInputProvider { get; private set; }
 
         [Header("Render Layer Settings")]
         [SerializeField] LayerMask firstPersonCullingMask;
@@ -66,8 +67,6 @@ namespace Scripts.Movement
         public bool IsPaused;
         public ECameraState CurrentCameraState { get; private set; }
 
-        bool isMoving;
-        bool isTurning;
 
         void Awake()
         {
@@ -87,14 +86,21 @@ namespace Scripts.Movement
             if (isMainHub) return;
             firstPersonCamera.MoveToTopOfPrioritySubqueue();
             cinemachineBrain.ManualUpdate();
+            StartCoroutine(UpdateWalkingRoutine());
         }
 
         void FixedUpdate()
         {
             DoMove();
-            if (!isTurning && moveInput.magnitude > 0.1f)
+            
+        }
+
+        IEnumerator UpdateWalkingRoutine()
+        {
+            while (gameObject.activeInHierarchy)
             {
-                animator.SetBool("IsWalking", true);
+                yield return new WaitForSeconds(0.25f);
+                animator.SetBool("IsWalking", playerRigidbody.velocity.sqrMagnitude > 0.1f);
             }
         }
 
@@ -139,62 +145,9 @@ namespace Scripts.Movement
 
         public void Move(InputAction.CallbackContext _callbackContext)
         {
-            if (_callbackContext.phase == InputActionPhase.Canceled)
-            {
-                animator.SetBool("IsWalking", false);
-            }
-
             moveInput = _callbackContext.ReadValue<Vector2>();
-            if (!IsThirdPersonActive()) return;
-            if (moveInput.sqrMagnitude < 0.01f) return;
-
-            var input = new Vector3(moveInput.x, 0f, moveInput.y);
-            var moveDirection = GetMoveDirection(input);
-
-            if (playerRigidbody.velocity.sqrMagnitude < 0.01f)
-            {
-                float angle = Vector3.SignedAngle(transform.forward, moveDirection, Vector3.up);
-
-                switch (angle)
-                {
-                    case > 45f and < 135f:
-                        animator.SetTrigger("TurnR");
-                        isTurning = true;
-                        animator.SetBool("IsWalking", false);
-                        return;
-                    case < -45f and > -135f:
-                        animator.SetTrigger("TurnL");
-                        isTurning = true;
-                        animator.SetBool("IsWalking", false);
-                        return;
-                    default:
-                    {
-                        if (Mathf.Abs(angle) >= 135f)
-                        {
-                            animator.SetTrigger("TurnAround");
-                            isTurning = true;
-                            animator.SetBool("IsWalking", false);
-                            return;
-                        }
-
-                        break;
-                    }
-                }
-            }
-
-            if (isTurning)
-            {
-                animator.SetBool("IsWalking", false);
-                return;
-            }
-
-            animator.SetBool("IsWalking", moveInput.magnitude > 0.1f);
         }
 
-        public void EndIsTurning()
-        {
-            isTurning = false;
-        }
 
         void DoMove()
         {
@@ -209,9 +162,9 @@ namespace Scripts.Movement
             }
 
             var input = new Vector3(moveInput.x, 0, moveInput.y);
+            if(input.magnitude > 0) animator.SetBool("IsWalking", true); 
             var moveDirection = GetMoveDirection(input);
-            if (isTurning) return;
-            
+
             ApplyMovementVelocity(moveDirection);
             if (isMainHub) return;
             if (IsThirdPersonActive())
@@ -243,11 +196,7 @@ namespace Scripts.Movement
             velocity.y = playerRigidbody.velocity.y;
 
             Debug.DrawRay(transform.position, _moveDirection * 2, Color.red, 0.1f);
-            isMoving = velocity != Vector3.zero;
             playerRigidbody.velocity = velocity;
-
-            animator.ResetTrigger("TurnL");
-            animator.ResetTrigger("TurnR");
         }
 
         void OnAnimatorMove()
@@ -317,7 +266,7 @@ namespace Scripts.Movement
             if (_context.phase != InputActionPhase.Started) return;
             if (IsPaused) return;
             IsPaused = true;
-            if(CinemachineInputProvider != null) CinemachineInputProvider.enabled = false;
+            if (CinemachineInputProvider != null) CinemachineInputProvider.enabled = false;
             pauseMenuLoader.LoadSceneAdditive();
         }
 

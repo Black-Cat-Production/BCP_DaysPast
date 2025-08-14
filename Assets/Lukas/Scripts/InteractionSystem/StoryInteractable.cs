@@ -19,6 +19,7 @@ namespace Scripts.InteractionSystem
             interactionMap.Add((true, false), () => PlayVoiceLine(EVoiceLineType.Visited));
             interactionMap.Add((true, true), () =>
             {
+                if (resolved) return;
                 PlayVoiceLine(EVoiceLineType.Understood);
                 resolved = true;
             });
@@ -26,25 +27,28 @@ namespace Scripts.InteractionSystem
 
         public override void Interact()
         {
-            if (playerController.CurrentCameraState != targetCameraState && targetCameraState != ECameraState.Either)
+            bool hasPrerequisites = CheckPrerequisites();
+            if (playerController.CurrentCameraState != targetCameraState && targetCameraState != ECameraState.Either && !resolved && hasPrerequisites)
             {
-                Debug.Log("Wrong Camera State Dialog!");
+                if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
+                SubtitleUI.Instance.DisplaySubtitle(voiceLineWrongCamera);
+                SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
                 return;
             }
-            bool hasPrerequisites = CheckPrerequisites();
 
-            if (interactionMap.TryGetValue((interacted, hasPrerequisites), out var action))
-            {
-                action.Invoke();
-            }
-            else if (resolved)
+            if (resolved)
             {
                 PlayVoiceLine(EVoiceLineType.Done);
+            }
+            else if (interactionMap.TryGetValue((interacted, hasPrerequisites), out var action))
+            {
+                action.Invoke();
             }
 
             interacted = true;
 
             if (!hasPrerequisites) return;
+            resolved = true;
             if (TryGetComponent(out Minigame minigame)) minigame.Play();
             if (hasContinuedMain) return;
             Debug.Log("Starting Mini-game or Story goes forward etc.");
@@ -54,7 +58,7 @@ namespace Scripts.InteractionSystem
 
         public override bool CheckPrerequisites()
         {
-            return prerequisites.Any(_interactable => _interactable.Interacted) || prerequisites.Count == 0;
+            return prerequisites.All(_interactable => _interactable.Resolved) || prerequisites.Count == 0;
         }
 
         public override void PlayVoiceLine(EVoiceLineType _voiceLineType)
