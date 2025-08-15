@@ -1,4 +1,5 @@
 ﻿using System;
+using FMOD.Studio;
 using Scripts.Movement;
 using Scripts.Scriptables.SceneLoader;
 using UnityEngine;
@@ -32,7 +33,8 @@ namespace Scripts.UI.PauseMenu
 
         public void ReturnToMainMenu()
         {
-            FMODUnity.RuntimeManager.PauseAllEvents(true);
+            var masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+            masterBus.stopAllEvents(STOP_MODE.IMMEDIATE);
             FMODUnity.RuntimeManager.CoreSystem.update();
             FMODUnity.RuntimeManager.StudioSystem.update();
             mainMenuLoader.LoadScene();
