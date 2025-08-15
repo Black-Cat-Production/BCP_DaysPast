@@ -107,13 +107,13 @@ namespace Scripts.MinigameSystem.Memory
             Cursor.visible = false;
             playerInput.enabled = true;
             playerInput.currentActionMap.Enable();
-            isGameOver = true;
             iconDetector.ChangeIconDisplayStatus(EIconDisplayState.DISPLAY);
             yield return StartCoroutine(blackoutTransition.TransitionFromBlackout(fakeVolumeImage));
         }
 
         protected override void EndGame()
         {
+            isGameOver = true;
             base.EndGame();
             StartCoroutine(EndGameRoutine());
             
@@ -144,7 +144,7 @@ namespace Scripts.MinigameSystem.Memory
             else
             {
                 StartCoroutine(TurnAroundRoutine(_card, true));
-                yield return TurnAroundRoutine(firstSelectedCard, true);
+                yield return TurnAroundRoutine(firstSelectedCard, true, true);
             }
 
             waitRoutine = null;
@@ -158,7 +158,7 @@ namespace Scripts.MinigameSystem.Memory
             return new Vector3(removedPosition.x, removedPosition.y + removedCards * 0.015f, removedPosition.z);
         }
 
-        IEnumerator TurnAroundRoutine(MemoryCard _card, bool _reverse)
+        IEnumerator TurnAroundRoutine(MemoryCard _card, bool _reverse, bool _secondCard = false)
         {
             if (turnRoutine != null) yield break;
             var startRot = _card.transform.rotation;
@@ -174,7 +174,7 @@ namespace Scripts.MinigameSystem.Memory
 
             yield return OverTimeMovement.MoveOverTime(startPos, liftedPos, liftDuration, _pos => _card.transform.localPosition = _pos);
 
-            turnEventEmitter.Play();
+            if(!_secondCard)turnEventEmitter.Play();
             yield return OverTimeMovement.MoveOverTime(startRot, endRot, flipDuration, _rot => _card.transform.rotation = _rot);
 
             yield return OverTimeMovement.MoveOverTime(liftedPos, startPos, liftDuration, _pos => _card.transform.localPosition = _pos);

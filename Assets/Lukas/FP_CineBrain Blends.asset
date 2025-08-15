@@ -16,7 +16,7 @@ MonoBehaviour:
   - m_From: '**ANY CAMERA**'
     m_To: MinigameCamera
     m_Blend:
-      m_Style: 6
+      m_Style: 0
       m_Time: 1
       m_CustomCurve:
         serializedVersion: 2

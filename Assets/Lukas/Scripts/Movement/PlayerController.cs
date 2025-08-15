@@ -249,6 +249,7 @@ namespace Scripts.Movement
         {
             if (_callbackContext.phase != InputActionPhase.Started) return;
             Physics.Raycast(mainUnityCamera.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity, memoryCardLayer);
+            if(hit.collider == null) return;
             var card = hit.collider.gameObject.GetComponentInParent<MemoryCard>();
             if (card == null) return;
             Debug.Log(hit.collider.gameObject.name);
