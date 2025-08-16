@@ -38,12 +38,11 @@ namespace Scripts.InteractionSystem
 
         void PlayVoiceLine(int _voiceLineIndex)
         {
-            string keyString = keyPrefix + "_0" + _voiceLineIndex;
+            string keyString = keyPrefix + "_" + _voiceLineIndex;
             Debug.Log(keyString);
             DialogueAudioScript.Instance.PlayDialogue(keyString);
-            if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
-            SubtitleUI.Instance.DisplaySubtitle(voiceLines[_voiceLineIndex - 1]);
-            SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Dynamic);
+            if (SubtitleUI.Instance == null) return;
+            SubtitleUI.Instance.DisplaySubtitle(voiceLines[_voiceLineIndex - 1], ESubtitleDisplayMode.Dynamic);
         }
 
         public override void ContinueMainItem()

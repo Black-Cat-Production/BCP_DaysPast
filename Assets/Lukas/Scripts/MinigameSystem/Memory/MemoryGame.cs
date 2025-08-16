@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using FMODUnity;
+using Scripts.Audio;
+using Scripts.Audio.AudioManager;
 using Scripts.InteractionSystem;
+using Scripts.UI.Subtitles;
 using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -115,8 +118,45 @@ namespace Scripts.MinigameSystem.Memory
         {
             isGameOver = true;
             base.EndGame();
-            StartCoroutine(EndGameRoutine());
-            
+            DialogueAudioScript.Instance.PlayDialogue("MEMO_4");
+            SubtitleUI.Instance.DisplaySubtitle("Well.. This definitely used to be harder. Not sure how this kept us entertained so long.", ESubtitleDisplayMode.Dynamic);
+            StartCoroutine(EndMemory());
+        }
+
+        IEnumerator EndMemory()
+        {
+            yield return EndGameRoutine();
+            BGMusicManager.Instance.PlayBGMusic(4);
+            DialogueAudioScript.Instance.PlayDialogue("MEMO_5");
+            SubtitleUI.Instance.DisplaySubtitle("I like to think I have more refined tastes nowadays..With my pencils here and the card in the sketchbook.. ",ESubtitleDisplayMode.Dynamic);
+            int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("MEMO_6");
+            SubtitleUI.Instance.DisplaySubtitle("That kid did´nt take my sketchbook from my backpack at all! But why would I leave it laying open like this? ", ESubtitleDisplayMode.Dynamic);
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("TRUTH_1");
+            SubtitleUI.Instance.DisplaySubtitle("Wait. I think I had to go and sign on some kind of birthday card for our teacher..I was always the one to make gifts like this as the designated crafty kid.",ESubtitleDisplayMode.Dynamic);
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("TRUTH_2");
+            SubtitleUI.Instance.DisplaySubtitle("That’s why I took all of my art things and my pressed flowers on this trip!",ESubtitleDisplayMode.Dynamic);
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("TRUTH_3");
+            SubtitleUI.Instance.DisplaySubtitle("All of this- and the reason something about this day is off.. It has to have something to do with Mrs. Porter.",ESubtitleDisplayMode.Dynamic);
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("TRUTH_4");
+            SubtitleUI.Instance.DisplaySubtitle("We must have signed the card in secret somewhere, where she would’nt see it.. I know I’m close to the answer, I have to find it!",ESubtitleDisplayMode.Dynamic);
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
         }
 
         void CardSelect(MemoryCard _card)

@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using Cinemachine;
+using Scripts.Audio;
 using Scripts.InteractionSystem;
 using Scripts.MinigameSystem.Memory;
 using Scripts.Scriptables.SceneLoader;
 using Scripts.Scriptables.Settings;
+using Scripts.UI.Subtitles;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
 namespace Scripts.Movement
@@ -35,7 +36,7 @@ namespace Scripts.Movement
         [SerializeField] CinemachineVirtualCamera firstPersonCamera;
         [SerializeField] CinemachineVirtualCamera thirdPersonCamera;
         [SerializeField] [Range(0, 90)] float cameraClampAngle;
-        [SerializeField] float lookSensitivity = 2.0f;
+        [SerializeField] float lookSensitivity = 1.0f;
         public CinemachineInputProvider CinemachineInputProvider { get; private set; }
 
         [Header("Render Layer Settings")]
@@ -66,6 +67,8 @@ namespace Scripts.Movement
 
         public bool IsPaused;
         public ECameraState CurrentCameraState { get; private set; }
+
+        bool neverSwapped = true;
 
 
         void Awake()
@@ -223,6 +226,12 @@ namespace Scripts.Movement
         {
             if (isMainHub) return;
             if (_callbackContext.phase != InputActionPhase.Started) return;
+            if (neverSwapped)
+            {
+                neverSwapped = false;
+                DialogueAudioScript.Instance.PlayDialogue("FS_1");
+                SubtitleUI.Instance.DisplaySubtitle("I’m back to being an adult? Wow everything is way smaller like this..\nLifting the bench shouldn’t be a problem anymore either.", ESubtitleDisplayMode.Dynamic);
+            }
             if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == firstPersonCamera && !swapBlocker.GetSwapBlocked(transform, thirdPersonBlockingMask))
             {
                 thirdPersonCamera.transform.LookAt(transform.forward);
@@ -231,6 +240,8 @@ namespace Scripts.Movement
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("FirstPersonOnly"), true);
                 Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("ThirdPersonOnly"), false);
                 CinemachineInputProvider.enabled = true;
+                thirdPersonCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_InputAxisValue = settings.MouseSensitivity;
+                thirdPersonCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_InputAxisValue = settings.MouseSensitivity;
                 CurrentCameraState = ECameraState.ThirdPerson;
             }
             else if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == thirdPersonCamera && !swapBlocker.GetSwapBlocked(transform, firstPersonBlockingMask))

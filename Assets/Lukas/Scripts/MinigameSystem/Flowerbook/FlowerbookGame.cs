@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FMODUnity;
+using Scripts.Audio;
 using Scripts.Movement;
+using Scripts.UI.Subtitles;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,8 +35,15 @@ namespace Scripts.MinigameSystem.Flowerbook
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             playerInput.SwitchCurrentActionMap("FlowerbookGame");
-            StartCoroutine(StartGameRoutine());
+            StartCoroutine(StartFlowerbook());
             
+        }
+
+        IEnumerator StartFlowerbook()
+        {
+            yield return StartGameRoutine();
+            DialogueAudioScript.Instance.PlayDialogue("FBMINI_2");
+            SubtitleUI.Instance.DisplaySubtitle("Oh no, all of the tape came loose, I have no idea where everything belonged anymore.", ESubtitleDisplayMode.Dynamic);
         }
 
         void OnEnable()
@@ -99,7 +109,40 @@ namespace Scripts.MinigameSystem.Flowerbook
             Cursor.lockState = CursorLockMode.Locked;
             playerInput.SwitchCurrentActionMap("Player");
             gameIsDone = true;
-            StartCoroutine(EndGameRoutine());
+            StartCoroutine(EndFlowerbook());
+        }
+
+        IEnumerator EndFlowerbook()
+        {
+            DialogueAudioScript.Instance.PlayDialogue("FBMINI_3");
+            SubtitleUI.Instance.DisplaySubtitle("Yes, this is it!", ESubtitleDisplayMode.Dynamic);
+            yield return StartCoroutine(EndGameRoutine());
+            DialogueAudioScript.Instance.PlayDialogue("FB_4");
+            int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            SubtitleUI.Instance.DisplaySubtitle("Much better! This was one of my favorite things to do back in the day. I don't really have time for stuff like this anymore.", ESubtitleDisplayMode.Dynamic);
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("FB_5");
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            SubtitleUI.Instance.DisplaySubtitle("Besides- I live in the city now! not exactly many flowers around... But at the same time kid me would be so jealous if she knew I live so close to her favorite toy store now.", ESubtitleDisplayMode.Dynamic);
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("FB_6");
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            SubtitleUI.Instance.DisplaySubtitle("My world sure got a little bigger over time.",ESubtitleDisplayMode.Dynamic);
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("SH_1");
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            SubtitleUI.Instance.DisplaySubtitle("With this whole “changing” thing- I used to climb underneath all of the playground I could fit! Both to hide from teachers, but also to make a little secret hideout!", ESubtitleDisplayMode.Dynamic);
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("SH_2");
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            SubtitleUI.Instance.DisplaySubtitle("I’m pretty sure at this playground I also had one. I can probably fit it now!", ESubtitleDisplayMode.Dynamic);
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+
         }
 
         protected override void OpenUI()

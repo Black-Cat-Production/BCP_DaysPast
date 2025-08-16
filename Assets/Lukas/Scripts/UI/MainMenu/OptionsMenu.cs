@@ -1,6 +1,7 @@
 ﻿using System;
 using FMOD.Studio;
 using Scripts.Scriptables.Settings;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ namespace Scripts.UI.MainMenu
         [SerializeField] Sprite toggleButtonOff;
         [SerializeField] Sprite toggleButtonOn;
         [SerializeField] Button subtitlesButton;
+        [SerializeField] TextMeshProUGUI subtitlesText;
         
         [Header("MouseSense")]
         [SerializeField] Slider mouseSense;
@@ -35,6 +37,8 @@ namespace Scripts.UI.MainMenu
             volumeMusicSlider.value = settings.MusicVolume;
             volumeSFXSlider.value = settings.SfxVolume;
             volumeDialogueSlider.value = settings.DialogueVolume;
+            subtitlesButton.image.sprite = settings.SubtitlesOn ? toggleButtonOn : toggleButtonOff;
+            subtitlesText.gameObject.SetActive(settings.SubtitlesOn);
             isOpening = false;
         }
 
@@ -42,6 +46,7 @@ namespace Scripts.UI.MainMenu
         {
             subtitlesButton.image.sprite = settings.SubtitlesOn ? toggleButtonOff : toggleButtonOn;
             settings.SubtitlesOn = !settings.SubtitlesOn;
+            subtitlesText.gameObject.SetActive(settings.SubtitlesOn);
         }
 
         public void UpdateMouseSense()
