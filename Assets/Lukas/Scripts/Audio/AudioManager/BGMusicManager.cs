@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.Design.Serialization;
-using FMODUnity;
+﻿using FMODUnity;
 using UnityEngine;
 
 namespace Scripts.Audio.AudioManager
@@ -35,11 +33,11 @@ namespace Scripts.Audio.AudioManager
 
             var tempRef = _trackNumber switch
             {
-                1 => EventReference.Find(theme01),
-                4 => EventReference.Find(theme04),
-                5 => EventReference.Find(theme05),
-                6 => EventReference.Find(theme06),
-                7 => EventReference.Find(theme07),
+                1 => FMODUnity.RuntimeManager.PathToEventReference(theme01),
+                4 => FMODUnity.RuntimeManager.PathToEventReference(theme04),
+                5 => FMODUnity.RuntimeManager.PathToEventReference(theme05),
+                6 => FMODUnity.RuntimeManager.PathToEventReference(theme06),
+                7 => FMODUnity.RuntimeManager.PathToEventReference(theme07),
                 _ => eventEmitter.EventReference
             };
             

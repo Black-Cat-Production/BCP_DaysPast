@@ -7,10 +7,8 @@ using Scripts.MinigameSystem.Memory;
 using Scripts.Scriptables.SceneLoader;
 using Scripts.Scriptables.Settings;
 using Scripts.UI.Subtitles;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
 namespace Scripts.Movement
