@@ -1,5 +1,570 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8394694369945199055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_click
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_click
+  Guid:
+    Data1: -1964112747
+    Data2: 1138062552
+    Data3: 764907163
+    Data4: 1538636697
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-7906818792181484656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/THEME_07
+  m_EditorClassIdentifier: 
+  Path: event:/Music/THEME_07
+  Guid:
+    Data1: -630439696
+    Data2: 1311225460
+    Data3: 1345183877
+    Data4: -876918131
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: -5876345140943183027}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 137500
+--- !u!114 &-7834961781658436126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/Connect The Dots/DOTS_click
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/Connect The Dots/DOTS_click
+  Guid:
+    Data1: 939391436
+    Data2: 1303408152
+    Data3: 1536892555
+    Data4: 1425359361
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-7336907252888203274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/Flowers/FLOWER_placing
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/Flowers/FLOWER_placing
+  Guid:
+    Data1: 29109049
+    Data2: 1304848939
+    Data3: -927390327
+    Data4: 1584342711
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6014316748299600992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_pov_change
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_pov_change
+  Guid:
+    Data1: -1215705363
+    Data2: 1170482804
+    Data3: 1966254208
+    Data4: -1359728519
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5876345140943183027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: ../FMODBuild/Build/Build/Desktop/Music.bank
+  Name: Music
+  StudioPath: bank:/Music
+  lastModified: 638909427820540723
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-5531830657025535783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/MG_completed
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/MG_completed
+  Guid:
+    Data1: 411379586
+    Data2: 1234092627
+    Data3: 1969111942
+    Data4: -1570819279
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5424803240974801943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/MG_start
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/MG_start
+  Guid:
+    Data1: 1987796647
+    Data2: 1285499864
+    Data3: 1003300001
+    Data4: -890763479
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4872690213519249156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/Flowers/FLOWER_pick_up
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/Flowers/FLOWER_pick_up
+  Guid:
+    Data1: 1070854756
+    Data2: 1327662397
+    Data3: 1988377001
+    Data4: -643752617
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4488490411681818137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Dialog.bank
+  m_EditorClassIdentifier: 
+  Path: ../FMODBuild/Build/Build/Desktop/Dialog.bank
+  Name: Dialog
+  StudioPath: bank:/Dialog
+  lastModified: 638909427819737799
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-4466914223329710769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/DIALOG TBALE.bank
+  m_EditorClassIdentifier: 
+  Path: ../FMODBuild/Build/Build/Desktop/DIALOG TBALE.bank
+  Name: DIALOG TBALE
+  StudioPath: bank:/DIALOG TBALE
+  lastModified: 638904398634177241
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-4464957624016089101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Character/Footsteps_grass
+  m_EditorClassIdentifier: 
+  Path: event:/Character/Footsteps_grass
+  Guid:
+    Data1: -1497347124
+    Data2: 1109180477
+    Data3: -2051752031
+    Data4: 80905704
+  Banks:
+  - {fileID: -2879372286400109571}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3924979339168044948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/Memory/MEMORY_pair_found
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/Memory/MEMORY_pair_found
+  Guid:
+    Data1: 1484681475
+    Data2: 1281294263
+    Data3: -1651929967
+    Data4: 1411213237
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3560114036867437434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/THEME_05
+  m_EditorClassIdentifier: 
+  Path: event:/Music/THEME_05
+  Guid:
+    Data1: -1438074623
+    Data2: 1228983718
+    Data3: 1746777785
+    Data4: -1488207785
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: -5876345140943183027}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 124027
+--- !u!114 &-2879372286400109571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: ../FMODBuild/Build/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638909427818584256
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-2863833425031404859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/Connect The Dots/DOTS_line
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/Connect The Dots/DOTS_line
+  Guid:
+    Data1: 1069871972
+    Data2: 1201400065
+    Data3: 1441270965
+    Data4: 1890405099
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-2557209713007717379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Atmosphere/ATMO_birds
+  m_EditorClassIdentifier: 
+  Path: event:/Atmosphere/ATMO_birds
+  Guid:
+    Data1: 916402477
+    Data2: 1166750052
+    Data3: 376471485
+    Data4: 289129252
+  Banks:
+  - {fileID: -2879372286400109571}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 872356
+--- !u!114 &-1942410024672103819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/THEME_06
+  m_EditorClassIdentifier: 
+  Path: event:/Music/THEME_06
+  Guid:
+    Data1: 964722383
+    Data2: 1247926783
+    Data3: -769173330
+    Data4: -1310129264
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: -5876345140943183027}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 210000
+--- !u!114 &-1182089931513235365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: ../FMODBuild/Build/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638909427819777938
+  FileSizes:
+  - Name: 
+    Value: 2568
+  Exists: 1
+--- !u!114 &-1172774418725800570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/SWIPE LEAVES/LEAVES_swiping
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/SWIPE LEAVES/LEAVES_swiping
+  Guid:
+    Data1: -1732508561
+    Data2: 1337788670
+    Data3: -846571647
+    Data4: -1157015938
+  Banks:
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-600771209869601719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Interaction/INTERACT_story_item
+  m_EditorClassIdentifier: 
+  Path: event:/Interaction/INTERACT_story_item
+  Guid:
+    Data1: -1271481327
+    Data2: 1159284801
+    Data3: -517844322
+    Data4: 1547343484
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-88467113249678066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_hover
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_hover
+  Guid:
+    Data1: -2066230150
+    Data2: 1092286618
+    Data3: -1743881580
+    Data4: 140864137
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,11 +577,414 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
-  EditorBanks: []
-  EditorEvents: []
+  EditorBanks:
+  - {fileID: -1182089931513235365}
+  - {fileID: 6133513606514888299}
+  - {fileID: -4466914223329710769}
+  - {fileID: -4488490411681818137}
+  - {fileID: -2879372286400109571}
+  - {fileID: -5876345140943183027}
+  - {fileID: 1647592508595536935}
+  EditorEvents:
+  - {fileID: 606713553571577935}
+  - {fileID: 5838055751667743069}
+  - {fileID: -3560114036867437434}
+  - {fileID: -3924979339168044948}
+  - {fileID: -600771209869601719}
+  - {fileID: 404523558861378366}
+  - {fileID: -2557209713007717379}
+  - {fileID: -7336907252888203274}
+  - {fileID: -4872690213519249156}
+  - {fileID: -2863833425031404859}
+  - {fileID: 4586827411257257372}
+  - {fileID: 2449524516066181670}
+  - {fileID: -88467113249678066}
+  - {fileID: -5531830657025535783}
+  - {fileID: -8394694369945199055}
+  - {fileID: 9113453912505047957}
+  - {fileID: -5424803240974801943}
+  - {fileID: -4464957624016089101}
+  - {fileID: -7834961781658436126}
+  - {fileID: -1942410024672103819}
+  - {fileID: -6014316748299600992}
+  - {fileID: 5960568851682778032}
+  - {fileID: -7906818792181484656}
+  - {fileID: 5937542331003078861}
+  - {fileID: 3341829579440272495}
+  - {fileID: 1962328644856074150}
+  - {fileID: -1172774418725800570}
   EditorParameters: []
-  MasterBanks: []
-  StringsBanks: []
+  MasterBanks:
+  - {fileID: -2879372286400109571}
+  StringsBanks:
+  - {fileID: -1182089931513235365}
   cacheVersion: 131848
-  cacheTime: 0
-  SerializableEventsDict: []
+  cacheTime: 638909427820540723
+  SerializableEventsDict:
+  - key: event:/Dialogue/DIALOG_PI
+    index: 0
+  - key: event:/Music/THEME_03
+    index: 1
+  - key: event:/Music/THEME_05
+    index: 2
+  - key: event:/Minigames/Memory/MEMORY_pair_found
+    index: 3
+  - key: event:/Interaction/INTERACT_story_item
+    index: 4
+  - key: event:/Character/Footsteps_dirt
+    index: 5
+  - key: event:/Atmosphere/ATMO_birds
+    index: 6
+  - key: event:/Minigames/Flowers/FLOWER_placing
+    index: 7
+  - key: event:/Minigames/Flowers/FLOWER_pick_up
+    index: 8
+  - key: event:/Minigames/Connect The Dots/DOTS_line
+    index: 9
+  - key: event:/Music/THEME_01
+    index: 10
+  - key: event:/Minigames/Memory/MEMORY_card_turn
+    index: 11
+  - key: event:/UI/UI_hover
+    index: 12
+  - key: event:/Minigames/MG_completed
+    index: 13
+  - key: event:/UI/UI_click
+    index: 14
+  - key: event:/Minigames/Memory/MEMORY_click
+    index: 15
+  - key: event:/Minigames/MG_start
+    index: 16
+  - key: event:/Character/Footsteps_grass
+    index: 17
+  - key: event:/Minigames/Connect The Dots/DOTS_click
+    index: 18
+  - key: event:/Music/THEME_06
+    index: 19
+  - key: event:/UI/UI_pov_change
+    index: 20
+  - key: event:/Music/THEME_04
+    index: 21
+  - key: event:/Music/THEME_07
+    index: 22
+  - key: event:/Music/THEME_02
+    index: 23
+  - key: event:/Minigames/Connect The Dots/DOTS_xxxx[unused]
+    index: 24
+  - key: event:/Atmosphere/ATMO_forest
+    index: 25
+  - key: event:/Minigames/SWIPE LEAVES/LEAVES_swiping
+    index: 26
+--- !u!114 &404523558861378366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Character/Footsteps_dirt
+  m_EditorClassIdentifier: 
+  Path: event:/Character/Footsteps_dirt
+  Guid:
+    Data1: 1049185813
+    Data2: 1264489832
+    Data3: -1009623655
+    Data4: 1422102812
+  Banks:
+  - {fileID: -2879372286400109571}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &606713553571577935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Dialogue/DIALOG_PI
+  m_EditorClassIdentifier: 
+  Path: event:/Dialogue/DIALOG_PI
+  Guid:
+    Data1: 1055189619
+    Data2: 1222033300
+    Data3: 1667784841
+    Data4: -1022574188
+  Banks:
+  - {fileID: -4488490411681818137}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &1647592508595536935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SFX.bank
+  m_EditorClassIdentifier: 
+  Path: ../FMODBuild/Build/Build/Desktop/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 638909427819838095
+  FileSizes: []
+  Exists: 1
+--- !u!114 &1962328644856074150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Atmosphere/ATMO_forest
+  m_EditorClassIdentifier: 
+  Path: event:/Atmosphere/ATMO_forest
+  Guid:
+    Data1: -1080023302
+    Data2: 1112738505
+    Data3: -143266411
+    Data4: -1483437239
+  Banks:
+  - {fileID: -2879372286400109571}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 671264
+--- !u!114 &2449524516066181670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/Memory/MEMORY_card_turn
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/Memory/MEMORY_card_turn
+  Guid:
+    Data1: -1660840855
+    Data2: 1307138755
+    Data3: 1931365266
+    Data4: -1069080496
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &3341829579440272495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/Connect The Dots/DOTS_xxxx[unused]
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/Connect The Dots/DOTS_xxxx[unused]
+  Guid:
+    Data1: -523479566
+    Data2: 1131703438
+    Data3: 1206449550
+    Data4: 1748428786
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &4586827411257257372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/THEME_01
+  m_EditorClassIdentifier: 
+  Path: event:/Music/THEME_01
+  Guid:
+    Data1: -1830117016
+    Data2: 1240039709
+    Data3: 1991688112
+    Data4: -927801539
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: -5876345140943183027}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 83703
+--- !u!114 &5838055751667743069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/THEME_03
+  m_EditorClassIdentifier: 
+  Path: event:/Music/THEME_03
+  Guid:
+    Data1: -2062395135
+    Data2: 1211887577
+    Data3: 1839364995
+    Data4: 2130300646
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: -5876345140943183027}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 68502
+--- !u!114 &5937542331003078861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/THEME_02
+  m_EditorClassIdentifier: 
+  Path: event:/Music/THEME_02
+  Guid:
+    Data1: 803964401
+    Data2: 1166525166
+    Data3: -1497808994
+    Data4: 1730903016
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: -5876345140943183027}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 210685
+--- !u!114 &5960568851682778032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/THEME_04
+  m_EditorClassIdentifier: 
+  Path: event:/Music/THEME_04
+  Guid:
+    Data1: 1864295918
+    Data2: 1250796354
+    Data3: -1420686658
+    Data4: -152048430
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: -5876345140943183027}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 76800
+--- !u!114 &6133513606514888299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/DIALOG TABLE.bank
+  m_EditorClassIdentifier: 
+  Path: ../FMODBuild/Build/Build/Desktop/DIALOG TABLE.bank
+  Name: DIALOG TABLE
+  StudioPath: bank:/DIALOG TABLE
+  lastModified: 638909427819687231
+  FileSizes: []
+  Exists: 1
+--- !u!114 &9113453912505047957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Minigames/Memory/MEMORY_click
+  m_EditorClassIdentifier: 
+  Path: event:/Minigames/Memory/MEMORY_click
+  Guid:
+    Data1: -1194096482
+    Data2: 1135161197
+    Data3: -1065298787
+    Data4: -263348534
+  Banks:
+  - {fileID: -2879372286400109571}
+  - {fileID: 1647592508595536935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
