@@ -27,17 +27,13 @@ namespace Scripts.InteractionSystem
         {
             if (interacted) return;
             interacted = true;
-            DialogueAudioScript.Instance.PlayDialogue("HICF_01");
+            DialogueAudioScript.Instance.PlayDialogue("HICF_1");
             StartCoroutine(LoadLevel());
         }
 
         IEnumerator LoadLevel()
         {
-            if (settings.SubtitlesOn)
-            {
-                SubtitleUI.Instance.DisplaySubtitle("Strange... I can hardly make out what this is supposed to be, but it feels.. familiar?");
-                SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Dynamic);
-            }
+            SubtitleUI.Instance.DisplaySubtitle("Strange... I can hardly make out what this is supposed to be, but it feels.. familiar?", ESubtitleDisplayMode.Dynamic);
 
             yield return new WaitUntil(() =>
             {
@@ -45,12 +41,9 @@ namespace Scripts.InteractionSystem
                 Debug.Log(state.ToString());
                 return state == PLAYBACK_STATE.STOPPED;
             });
-            DialogueAudioScript.Instance.PlayDialogue("HICF_03");
-            if (settings.SubtitlesOn)
-            {
-                SubtitleUI.Instance.DisplaySubtitle("Let's see what this is about!");
-                SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Dynamic);
-            }
+            DialogueAudioScript.Instance.PlayDialogue("HICF_3");
+
+            SubtitleUI.Instance.DisplaySubtitle("Let's see what this is about!", ESubtitleDisplayMode.Dynamic);
 
             yield return new WaitUntil(() =>
             {

@@ -3,6 +3,7 @@ using System.Collections;
 using FMOD;
 using FMOD.Studio;
 using Scripts.Audio;
+using Scripts.Scriptables.Settings;
 using TMPro;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -15,6 +16,7 @@ namespace Scripts.UI.Subtitles
 
         [SerializeField] TextMeshProUGUI text;
         [SerializeField] CanvasGroup uiGroup;
+        [SerializeField] SettingsSO settings;
 
         void Awake()
         {
@@ -22,8 +24,9 @@ namespace Scripts.UI.Subtitles
             else Destroy(gameObject);
         }
 
-        public void DisplaySubtitle(string _subtitle)
+        public void DisplaySubtitle(string _subtitle, ESubtitleDisplayMode _subtitleDisplayMode, float _fixedDurationValue = 2f)
         {
+            if (!settings.SubtitlesOn) return;
             if (uiGroup.gameObject.activeSelf)
             {
                 StopAllCoroutines();
@@ -32,6 +35,7 @@ namespace Scripts.UI.Subtitles
 
             uiGroup.gameObject.SetActive(true);
             text.text = _subtitle;
+            StartSubtitleTimer(_subtitleDisplayMode, _fixedDurationValue);
         }
 
 
@@ -40,7 +44,7 @@ namespace Scripts.UI.Subtitles
             uiGroup.gameObject.SetActive(false);
         }
 
-        public void StartSubtitleTimer(ESubtitleDisplayMode _subtitleDisplayMode, float _fixedDurationValue = 2f)
+        void StartSubtitleTimer(ESubtitleDisplayMode _subtitleDisplayMode, float _fixedDurationValue = 2f)
         {
             StartCoroutine(ResetSubtitleDisplay(_subtitleDisplayMode, _fixedDurationValue));
         }

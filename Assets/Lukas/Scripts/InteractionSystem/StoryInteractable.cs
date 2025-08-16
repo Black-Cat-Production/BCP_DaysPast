@@ -30,9 +30,8 @@ namespace Scripts.InteractionSystem
             bool hasPrerequisites = CheckPrerequisites();
             if (playerController.CurrentCameraState != targetCameraState && targetCameraState != ECameraState.Either && !resolved && hasPrerequisites)
             {
-                if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
-                SubtitleUI.Instance.DisplaySubtitle(voiceLineWrongCamera);
-                SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
+                if (SubtitleUI.Instance == null) return;
+                SubtitleUI.Instance.DisplaySubtitle(voiceLineWrongCamera, ESubtitleDisplayMode.Fixed);
                 return;
             }
 
@@ -64,9 +63,8 @@ namespace Scripts.InteractionSystem
         public override void PlayVoiceLine(EVoiceLineType _voiceLineType)
         {
             Debug.Log(voiceLines[(int)_voiceLineType]);
-            if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
-            SubtitleUI.Instance.DisplaySubtitle(voiceLines[(int)_voiceLineType]);
-            SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
+            if (SubtitleUI.Instance == null) return;
+            SubtitleUI.Instance.DisplaySubtitle(voiceLines[(int)_voiceLineType], ESubtitleDisplayMode.Fixed);
         }
 
         public override void ContinueMainItem()

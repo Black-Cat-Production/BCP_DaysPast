@@ -1319,7 +1319,7 @@ GameObject:
   - component: {fileID: 690016603}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2309,6 +2309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1637785364}
   uiGroup: {fileID: 450635295}
+  settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
 --- !u!114 &1146040460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2732,7 +2733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1353049496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4229,8 +4230,8 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
   targetCameraState: 0
   keyPrefix: HICLOCK
-  startIndex: 2
-  maxIndex: 2
+  startIndex: 1
+  maxIndex: 1
 --- !u!64 &1555230388
 MeshCollider:
   m_ObjectHideFlags: 0

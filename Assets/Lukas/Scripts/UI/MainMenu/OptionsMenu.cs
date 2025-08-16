@@ -1,6 +1,7 @@
 ﻿using System;
 using FMOD.Studio;
 using Scripts.Scriptables.Settings;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ namespace Scripts.UI.MainMenu
         [SerializeField] Sprite toggleButtonOff;
         [SerializeField] Sprite toggleButtonOn;
         [SerializeField] Button subtitlesButton;
+        [SerializeField] TextMeshProUGUI subtitlesText;
         
         [Header("MouseSense")]
         [SerializeField] Slider mouseSense;
@@ -42,6 +44,7 @@ namespace Scripts.UI.MainMenu
         {
             subtitlesButton.image.sprite = settings.SubtitlesOn ? toggleButtonOff : toggleButtonOn;
             settings.SubtitlesOn = !settings.SubtitlesOn;
+            subtitlesText.gameObject.SetActive(settings.SubtitlesOn);
         }
 
         public void UpdateMouseSense()

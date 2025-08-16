@@ -41,6 +41,13 @@ namespace Scripts.Audio
             dialogueCallback = DialogueEventCallback;
         }
 
+        public bool WaitUntilDialogueDone()
+        {
+            Instance.DialogueInstance.getPlaybackState(out var state);
+            //Debug.Log(state.ToString());
+            return state == PLAYBACK_STATE.STOPPED;
+        }
+
         public void PlayDialogue(string _key)
         {
             DialogueInstance.getPlaybackState(out var state);

@@ -103,20 +103,17 @@ namespace Scripts.InteractionSystem
             switch (_voiceLineIndex)
             {
                 case 0:
-                    if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
-                    SubtitleUI.Instance.DisplaySubtitle(firstInteraction_01 + "___" + firstInteraction_02);
-                    SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
+                    if (SubtitleUI.Instance == null) return;
+                    SubtitleUI.Instance.DisplaySubtitle(firstInteraction_01 + "___" + firstInteraction_02, ESubtitleDisplayMode.Fixed);
                     break;
                 case >= 1 and < 7:
-                    if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
-                    SubtitleUI.Instance.DisplaySubtitle(voiceLines[2]);
-                    SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
+                    if (SubtitleUI.Instance == null) return;
+                    SubtitleUI.Instance.DisplaySubtitle(voiceLines[2], ESubtitleDisplayMode.Fixed);
                     break;
                 case 7:
                     Debug.Log("RESOLVED");
-                    if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
-                    SubtitleUI.Instance.DisplaySubtitle("RESOLVED");
-                    SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
+                    if (SubtitleUI.Instance == null) return;
+                    SubtitleUI.Instance.DisplaySubtitle("RESOLVED", ESubtitleDisplayMode.Fixed);
                     break;
             }
         }
