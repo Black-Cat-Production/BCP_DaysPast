@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using Cinemachine;
+using Scripts.Audio;
 using Scripts.InteractionSystem;
 using Scripts.MinigameSystem.Memory;
 using Scripts.Scriptables.SceneLoader;
 using Scripts.Scriptables.Settings;
+using Scripts.UI.Subtitles;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -67,6 +69,8 @@ namespace Scripts.Movement
 
         public bool IsPaused;
         public ECameraState CurrentCameraState { get; private set; }
+
+        bool neverSwapped = true;
 
 
         void Awake()
@@ -224,6 +228,12 @@ namespace Scripts.Movement
         {
             if (isMainHub) return;
             if (_callbackContext.phase != InputActionPhase.Started) return;
+            if (neverSwapped)
+            {
+                neverSwapped = false;
+                DialogueAudioScript.Instance.PlayDialogue("FS_1");
+                SubtitleUI.Instance.DisplaySubtitle("I’m back to being an adult? Wow everything is way smaller like this..\nLifting the bench shouldn’t be a problem anymore either.", ESubtitleDisplayMode.Dynamic);
+            }
             if ((CinemachineVirtualCamera)cinemachineBrain.ActiveVirtualCamera == firstPersonCamera && !swapBlocker.GetSwapBlocked(transform, thirdPersonBlockingMask))
             {
                 thirdPersonCamera.transform.LookAt(transform.forward);

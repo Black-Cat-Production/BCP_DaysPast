@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FMODUnity;
+using Scripts.Audio;
+using Scripts.UI.Subtitles;
 using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -144,7 +146,16 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             playerInput.enabled = false;
-            StartCoroutine(StartGameRoutine());
+            StartCoroutine(StartConnectTheDots());
+        }
+
+        IEnumerator StartConnectTheDots()
+        {
+            yield return StartGameRoutine();
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(DialogueAudioScript.Instance.CurrentSessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("CTD_1");
+            SubtitleUI.Instance.DisplaySubtitle("My friend Tom sometimes came up with puzzles. He was the only other kid allowed in here- he drew them in chalk he snatched from our classroom!", ESubtitleDisplayMode.Dynamic);
         }
 
 
@@ -155,7 +166,26 @@ namespace Scripts.MinigameSystem.ConnectTheDots
             Cursor.lockState = CursorLockMode.Locked;
             playerInput.enabled = true;
             gameIsDone = true;
-            StartCoroutine(EndGameRoutine());
+            DialogueAudioScript.Instance.PlayDialogue("CTD_2");
+            SubtitleUI.Instance.DisplaySubtitle("I still got it! ",ESubtitleDisplayMode.Dynamic);
+            StartCoroutine(EndConnectTheDots());
+        }
+
+        IEnumerator EndConnectTheDots()
+        {
+            yield return EndGameRoutine();
+            DialogueAudioScript.Instance.PlayDialogue("SH_5");
+            SubtitleUI.Instance.DisplaySubtitle("Tom and I lost contact after school, but we used to get in trouble all the time together.. ",ESubtitleDisplayMode.Dynamic);
+            int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("SH_6");
+            SubtitleUI.Instance.DisplaySubtitle("Hardly a class trip someone wouldn’t get a bloody nose or scratched up knees at least! Thinking of.. Maybe someone got hurt on this trip!", ESubtitleDisplayMode.Dynamic);
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("SH_7");
+            SubtitleUI.Instance.DisplaySubtitle("And that’s why it wont leave my mind.. But how? Mrs. Porter always kept an eye out from the seating area..",ESubtitleDisplayMode.Dynamic);
         }
 
 

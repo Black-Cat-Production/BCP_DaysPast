@@ -3,6 +3,7 @@ using System.Collections;
 using Scripts.Audio.AudioManager;
 using Scripts.InteractionSystem;
 using Scripts.Movement;
+using Scripts.UI.Subtitles;
 using Scripts.Utility;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,6 +48,7 @@ namespace Scripts.MinigameSystem
                 yield break;
             }
 
+            SubtitleUI.Instance.DisableBlurBackground();
             yield return StartCoroutine(blackoutTransition.TransitionToBlackout(fakeVolumeImage));
             OpenUI();
             audioHelper.PlayStartAudio();
@@ -66,6 +68,7 @@ namespace Scripts.MinigameSystem
             yield return StartCoroutine(blackoutTransition.TransitionToBlackout(fakeVolumeImage));
             CloseUI();
             yield return StartCoroutine(blackoutTransition.TransitionFromBlackout(fakeVolumeImage));
+            SubtitleUI.Instance.ActivateBlurBackground();
         }
     }
 }

@@ -6,6 +6,7 @@ using Scripts.Audio;
 using Scripts.Scriptables.Settings;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 namespace Scripts.UI.Subtitles
@@ -17,11 +18,22 @@ namespace Scripts.UI.Subtitles
         [SerializeField] TextMeshProUGUI text;
         [SerializeField] CanvasGroup uiGroup;
         [SerializeField] SettingsSO settings;
+        [SerializeField] Image blurBackgroundImage;
 
         void Awake()
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
+        }
+
+        public void ActivateBlurBackground()
+        {
+            blurBackgroundImage.color = new Color(1, 1, 1, 1);
+        }
+
+        public void DisableBlurBackground()
+        {
+            blurBackgroundImage.color = new Color(1, 1, 1, 0);
         }
 
         public void DisplaySubtitle(string _subtitle, ESubtitleDisplayMode _subtitleDisplayMode, float _fixedDurationValue = 2f)
@@ -66,7 +78,7 @@ namespace Scripts.UI.Subtitles
                     yield return new WaitUntil(() =>
                     {
                         DialogueAudioScript.Instance.DialogueInstance.getPlaybackState(out var state);
-                        Debug.Log(state.ToString());
+                        //Debug.Log(state.ToString());
                         return state == PLAYBACK_STATE.STOPPED;
                     });
                     break;

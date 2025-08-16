@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using FMOD.Studio;
 using Scripts.Audio;
 using Scripts.Scriptables.SceneLoader;
 using UnityEngine;
@@ -18,9 +20,19 @@ namespace Scripts.Program
             StartCoroutine(IntroRoutine());
         }
 
+        void Update()
+        {
+            if (!Input.GetKeyDown(KeyCode.Escape)) return;
+            StopAllCoroutines();
+            var masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+            masterBus.stopAllEvents(STOP_MODE.IMMEDIATE);
+            hubAreaLoader.LoadScene();
+        }
+
         IEnumerator IntroRoutine()
         {
             Debug.Log(introSprites.Count);
+            int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
             for (int i = 0; i < introSprites.Count; i++)
             {
                 introSlide.sprite = (i + 1) switch
@@ -31,12 +43,14 @@ namespace Scripts.Program
                 };
                 DialogueAudioScript.Instance.PlayDialogue("OPEN_" + (i + 1));
                 Debug.Log("OPEN_" + (i+1));
-                yield return new WaitUntil(DialogueAudioScript.Instance.WaitUntilDialogueDone);
+                yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+                if (DialogueAudioScript.Instance.WasCancelled) yield break;
             }
 
             introSlide.sprite = introSprites[^1];
             DialogueAudioScript.Instance.PlayDialogue("OPEN_12");
-            yield return new WaitUntil(DialogueAudioScript.Instance.WaitUntilDialogueDone);
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
             yield return new WaitForSeconds(0.5f);
             hubAreaLoader.LoadScene();
         }

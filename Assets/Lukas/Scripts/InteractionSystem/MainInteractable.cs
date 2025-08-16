@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Scripts.Audio;
+using Scripts.DialogueSystem;
 using Scripts.Scriptables.SceneLoader;
 using Scripts.Scriptables.Settings;
 using Scripts.UI.Subtitles;
@@ -19,6 +21,7 @@ namespace Scripts.InteractionSystem
         [SerializeField] [TextArea] protected string betweenStepsVoiceLine;
         [SerializeField] int fullStepCount = 8;
         [SerializeField] Canvas interactionIconCanvas;
+        [SerializeField] EndGameDialogue endGameDialogue;
 
         [SerializeField] SceneLoader mainHubLoader;
         [SerializeField] SettingsSO settings;
@@ -75,10 +78,6 @@ namespace Scripts.InteractionSystem
         {
             PlayVoiceLine(stepCount);
             if(stepCount == 0) stepCount = 1;
-            if (stepCount == fullStepCount)
-            {
-                StartCoroutine(LoadMainMenu());
-            }
         }
 
         IEnumerator LoadMainMenu()
@@ -103,19 +102,38 @@ namespace Scripts.InteractionSystem
             switch (_voiceLineIndex)
             {
                 case 0:
-                    if (SubtitleUI.Instance == null) return;
-                    SubtitleUI.Instance.DisplaySubtitle(firstInteraction_01 + "___" + firstInteraction_02, ESubtitleDisplayMode.Fixed);
+                    StartCoroutine(PlayStartDialogueChain());
                     break;
-                case >= 1 and < 7:
-                    if (SubtitleUI.Instance == null) return;
-                    SubtitleUI.Instance.DisplaySubtitle(voiceLines[2], ESubtitleDisplayMode.Fixed);
+                case 1:
+                    DialogueAudioScript.Instance.PlayDialogue("CFS_1");
+                    SubtitleUI.Instance.DisplaySubtitle(fullBlackoutVoiceLine, ESubtitleDisplayMode.Dynamic);
                     break;
-                case 7:
-                    Debug.Log("RESOLVED");
-                    if (SubtitleUI.Instance == null) return;
-                    SubtitleUI.Instance.DisplaySubtitle("RESOLVED", ESubtitleDisplayMode.Fixed);
+                case >= 2 and < 8:
+                    DialogueAudioScript.Instance.PlayDialogue("CFS_2");
+                    SubtitleUI.Instance.DisplaySubtitle(voiceLines[3], ESubtitleDisplayMode.Fixed);
+                    break;
+                case 8:
+                    StartCoroutine(EndGame());
                     break;
             }
+        }
+
+        IEnumerator EndGame()
+        {
+            yield return endGameDialogue.StartEndGameDialogue();
+            StartCoroutine(LoadMainMenu());
+        }
+
+        IEnumerator PlayStartDialogueChain()
+        {
+            DialogueAudioScript.Instance.PlayDialogue("LICF_1");
+            SubtitleUI.Instance.DisplaySubtitle(firstInteraction_01, ESubtitleDisplayMode.Dynamic);
+            int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+            if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            DialogueAudioScript.Instance.PlayDialogue("LICF_2");
+            SubtitleUI.Instance.DisplaySubtitle(firstInteraction_02, ESubtitleDisplayMode.Fixed);
+            yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
         }
 
         void UpdateShader()

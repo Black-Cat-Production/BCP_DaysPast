@@ -37,6 +37,8 @@ namespace Scripts.UI.MainMenu
             volumeMusicSlider.value = settings.MusicVolume;
             volumeSFXSlider.value = settings.SfxVolume;
             volumeDialogueSlider.value = settings.DialogueVolume;
+            subtitlesButton.image.sprite = settings.SubtitlesOn ? toggleButtonOn : toggleButtonOff;
+            subtitlesText.gameObject.SetActive(settings.SubtitlesOn);
             isOpening = false;
         }
 

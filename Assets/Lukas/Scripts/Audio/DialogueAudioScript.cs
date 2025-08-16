@@ -4,9 +4,7 @@ using AOT;
 using FMOD;
 using FMOD.Studio;
 using FMODUnity;
-using Unity.VisualScripting;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Scripts.Audio
@@ -20,6 +18,9 @@ namespace Scripts.Audio
 
 
         public static DialogueAudioScript Instance;
+
+        public int CurrentSessionID { get; private set; } = 0;
+        public bool WasCancelled { get; private set; } = false;
 
 #if UNITY_EDITOR
         void Reset()
@@ -41,21 +42,31 @@ namespace Scripts.Audio
             dialogueCallback = DialogueEventCallback;
         }
 
-        public bool WaitUntilDialogueDone()
+        public bool WaitUntilDialogueDone(int _mySessionID)
         {
-            Instance.DialogueInstance.getPlaybackState(out var state);
-            //Debug.Log(state.ToString());
-            return state == PLAYBACK_STATE.STOPPED;
+            if (_mySessionID != CurrentSessionID)
+            {
+                WasCancelled = true;
+                return true;
+            }
+
+            DialogueInstance.getPlaybackState(out var state);
+            if (state != PLAYBACK_STATE.STOPPED) return false;
+            WasCancelled = false;
+            return true;
+
         }
 
         public void PlayDialogue(string _key)
         {
+            CurrentSessionID++;
             DialogueInstance.getPlaybackState(out var state);
-            if (state == PLAYBACK_STATE.PLAYING)
-            {
-                DialogueInstance.stop(STOP_MODE.IMMEDIATE);
-            }
-
+           if (state == PLAYBACK_STATE.PLAYING)
+           {
+               var dialogueBus = FMODUnity.RuntimeManager.GetBus("bus:/DIALOG");
+               dialogueBus.stopAllEvents(STOP_MODE.IMMEDIATE);
+           }
+            
             DialogueInstance = RuntimeManager.CreateInstance(EventName);
 
             // Pin the key string in memory and pass a pointer through the user data

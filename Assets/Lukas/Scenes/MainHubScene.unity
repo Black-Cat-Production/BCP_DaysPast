@@ -2310,6 +2310,7 @@ MonoBehaviour:
   text: {fileID: 1637785364}
   uiGroup: {fileID: 450635295}
   settings: {fileID: 11400000, guid: ef3e5f7e857be3747bd88d5e9eb47e0d, type: 2}
+  blurBackgroundImage: {fileID: 0}
 --- !u!114 &1146040460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2795,6 +2796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd224d49fd83489c808aa0972ca1b28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  voiceLines: []
+  isLevel: 0
 --- !u!1001 &1390715993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2950,6 +2953,7 @@ GameObject:
   - component: {fileID: 1415990494}
   - component: {fileID: 1415990495}
   - component: {fileID: 1415990496}
+  - component: {fileID: 1415990497}
   m_Layer: 0
   m_Name: HubAudioManager
   m_TagString: Untagged
@@ -3003,6 +3007,37 @@ MonoBehaviour:
       Data3: 1667784841
       Data4: -1022574188
     Path: event:/Dialogue/DIALOG_PI
+--- !u!114 &1415990497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415990490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -2062395135
+      Data2: 1211887577
+      Data3: 1839364995
+      Data4: 2130300646
+    Path: event:/Music/THEME_03
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!64 &1426619017
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4368,7 +4403,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: TEXT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b4eeae782d36b334e933002a1643c973, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4432,7 +4467,7 @@ MonoBehaviour:
   m_margin: {x: 25, y: 15, z: 25, w: 30}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!64 &1653562725
