@@ -382,7 +382,7 @@ MonoBehaviour:
       Data2: 1138062552
       Data3: 764907163
       Data4: 1538636697
-    Path: event:/UI/UI_click[placeholder]
+    Path: event:/UI/UI_click
   Event: 
   EventPlayTrigger: 19
   EventStopTrigger: 20
@@ -913,7 +913,7 @@ MonoBehaviour:
       Data2: 1138062552
       Data3: 764907163
       Data4: 1538636697
-    Path: event:/UI/UI_click[placeholder]
+    Path: event:/UI/UI_click
   Event: 
   EventPlayTrigger: 19
   EventStopTrigger: 20
@@ -2644,7 +2644,7 @@ MonoBehaviour:
       Data2: 1138062552
       Data3: 764907163
       Data4: 1538636697
-    Path: event:/UI/UI_click[placeholder]
+    Path: event:/UI/UI_click
   Event: 
   EventPlayTrigger: 19
   EventStopTrigger: 20
@@ -3657,7 +3657,7 @@ MonoBehaviour:
       Data2: 1138062552
       Data3: 764907163
       Data4: 1538636697
-    Path: event:/UI/UI_click[placeholder]
+    Path: event:/UI/UI_click
   Event: 
   EventPlayTrigger: 19
   EventStopTrigger: 20
@@ -4540,7 +4540,7 @@ MonoBehaviour:
       Data2: 1138062552
       Data3: 764907163
       Data4: 1538636697
-    Path: event:/UI/UI_click[placeholder]
+    Path: event:/UI/UI_click
   Event: 
   EventPlayTrigger: 19
   EventStopTrigger: 20
