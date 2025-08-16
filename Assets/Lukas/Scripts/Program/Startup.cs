@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using Scripts.Scriptables.Settings;
 using UnityEngine;
 
@@ -22,7 +23,6 @@ namespace Scripts.Program
             var masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
             masterBus.setVolume(settings.MasterVolume / 100f);
 
-            settings.SubtitlesOn = false;
         }
     }
 }

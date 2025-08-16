@@ -1,8 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using AYellowpaper.SerializedCollections;
 using Scripts.Audio;
+using Scripts.Audio.AudioManager;
 using Scripts.DialogueSystem;
 using Scripts.MinigameSystem;
 using Scripts.UI.Subtitles;
+using TMPro;
 using UnityEngine;
 
 namespace Scripts.InteractionSystem
@@ -10,6 +16,16 @@ namespace Scripts.InteractionSystem
     public class StoryInteractable : Interactable
     {
         bool hasContinuedMain = false;
+        [SerializeField] TutorialTextHelper tutorialTextHelper;
+
+        [SerializeField] int startIndexDialogueChain;
+        [SerializeField] int endIndexDialogueChain;
+
+        [SerializedDictionary("VoiceLineIndex", "Key")] [SerializeField]
+        SerializedDictionary<int, string> chainLinks = new();
+
+        [SerializedDictionary("VoiceLineType", "Key")] [SerializeField]
+        SerializedDictionary<EVoiceLineType, string> normalLinks = new();
 
         protected override void Awake()
         {
@@ -30,9 +46,9 @@ namespace Scripts.InteractionSystem
             bool hasPrerequisites = CheckPrerequisites();
             if (playerController.CurrentCameraState != targetCameraState && targetCameraState != ECameraState.Either && !resolved && hasPrerequisites)
             {
-                if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
-                SubtitleUI.Instance.DisplaySubtitle(voiceLineWrongCamera);
-                SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
+                if (SubtitleUI.Instance == null) return;
+                PlayVoiceLine(EVoiceLineType.CameraError);
+                if (tutorialTextHelper != null) tutorialTextHelper.DisplayTutorial(true);
                 return;
             }
 
@@ -64,9 +80,34 @@ namespace Scripts.InteractionSystem
         public override void PlayVoiceLine(EVoiceLineType _voiceLineType)
         {
             Debug.Log(voiceLines[(int)_voiceLineType]);
-            if (SubtitleUI.Instance == null || !settings.SubtitlesOn) return;
-            SubtitleUI.Instance.DisplaySubtitle(voiceLines[(int)_voiceLineType]);
-            SubtitleUI.Instance.StartSubtitleTimer(ESubtitleDisplayMode.Fixed);
+            if (voiceLines[(int)_voiceLineType].Contains("LONG DYNAMIC", StringComparison.Ordinal))
+            {
+                Debug.Log("Dynamic dialogue detected!");
+                StartCoroutine(PlayDialogueChain());
+                return;
+            }
+
+            if (!normalLinks.ContainsKey(_voiceLineType)) return;
+            string key = normalLinks[_voiceLineType];
+            DialogueAudioScript.Instance.PlayDialogue(key);
+            if (SubtitleUI.Instance == null) return;
+            SubtitleUI.Instance.DisplaySubtitle(voiceLines[(int)_voiceLineType], ESubtitleDisplayMode.Dynamic);
+        }
+
+        IEnumerator PlayDialogueChain()
+        {
+            if(this.gameObject.name == "SM_Sketchbook") BGMusicManager.Instance.PlayBGMusic(5);
+            for (int i = startIndexDialogueChain; i <= endIndexDialogueChain; i++)
+            {
+                string key = chainLinks[i];
+                DialogueAudioScript.Instance.PlayDialogue(key);
+                int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+                SubtitleUI.Instance.DisplaySubtitle(DialogueTextHelper.Instance.GetSubtitle(key), ESubtitleDisplayMode.Dynamic);
+                yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
+                if (DialogueAudioScript.Instance.WasCancelled) yield break;
+            }
+
+            yield return null;
         }
 
         public override void ContinueMainItem()

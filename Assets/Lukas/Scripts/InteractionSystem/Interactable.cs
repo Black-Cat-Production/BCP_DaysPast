@@ -42,6 +42,7 @@ namespace Scripts.InteractionSystem
             voiceLines.Add(voiceLine3);
             voiceLines.Add(voiceLine4);
             voiceLines.Add(voiceLineResolved);
+            voiceLines.Add(voiceLineWrongCamera);
         }
 
         public abstract void Interact();

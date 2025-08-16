@@ -406,6 +406,7 @@ MonoBehaviour:
   - Master
   Banks:
   - Dialog
+  - DIALOG TABLE
   - DIALOG TBALE
   - Music
   - SFX

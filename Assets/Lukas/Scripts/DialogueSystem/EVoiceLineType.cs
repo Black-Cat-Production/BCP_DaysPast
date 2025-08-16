@@ -6,6 +6,7 @@
         Visited,
         Known,
         Understood,
-        Done
+        Done,
+        CameraError,
     }
 }

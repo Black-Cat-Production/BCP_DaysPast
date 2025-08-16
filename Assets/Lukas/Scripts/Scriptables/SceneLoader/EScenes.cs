@@ -6,6 +6,7 @@
         MainMenu,
         MainHub,
         Level,
-        Pause
+        Pause,
+        Intro
     }
 }
