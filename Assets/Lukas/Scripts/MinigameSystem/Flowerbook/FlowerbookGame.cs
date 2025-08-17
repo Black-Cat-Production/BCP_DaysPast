@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FMODUnity;
 using Scripts.Audio;
+using Scripts.InteractionSystem;
 using Scripts.Movement;
 using Scripts.UI.Subtitles;
 using Unity.VisualScripting;
@@ -21,6 +22,7 @@ namespace Scripts.MinigameSystem.Flowerbook
         [SerializeField] List<Leaf> leafs = new List<Leaf>();
         [SerializeField] List<LeafSpot> leafSpots = new List<LeafSpot>();
         [SerializeField] PlayerInput playerInput;
+        [SerializeField] TutorialTextHelper tutorialTextHelper;
 
         [SerializeField] float randomFlowerRotationMin;
         [SerializeField] float randomFlowerRotationMax;
@@ -44,6 +46,7 @@ namespace Scripts.MinigameSystem.Flowerbook
             yield return StartGameRoutine();
             DialogueAudioScript.Instance.PlayDialogue("FBMINI_2");
             SubtitleUI.Instance.DisplaySubtitle("Oh no, all of the tape came loose, I have no idea where everything belonged anymore.", ESubtitleDisplayMode.Dynamic);
+            tutorialTextHelper.DisplayTutorial(_delayUntilVoiceLine: true);
         }
 
         void OnEnable()

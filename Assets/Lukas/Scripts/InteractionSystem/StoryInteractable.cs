@@ -97,7 +97,7 @@ namespace Scripts.InteractionSystem
 
         IEnumerator PlayDialogueChain()
         {
-            if(this.gameObject.name == "SM_Sketchbook") BGMusicManager.Instance.PlayBGMusic(5);
+            if(gameObject.name == "SM_Sketchbook") BGMusicManager.Instance.PlayBGMusic(5);
             for (int i = startIndexDialogueChain; i <= endIndexDialogueChain; i++)
             {
                 string key = chainLinks[i];

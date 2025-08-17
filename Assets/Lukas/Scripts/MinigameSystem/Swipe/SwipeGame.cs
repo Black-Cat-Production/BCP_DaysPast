@@ -47,6 +47,9 @@ namespace Scripts.MinigameSystem.Swipe
             yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(DialogueAudioScript.Instance.CurrentSessionID));
             DialogueAudioScript.Instance.PlayDialogue("ITPT_1");
             SubtitleUI.Instance.DisplaySubtitle("There is something under the leaves here..", ESubtitleDisplayMode.Dynamic);
+            var sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
+            sfxBus.getVolume(out float volume);
+            sfxBus.setVolume(volume * 0.5f);
         }
 
         protected override void EndGame()
@@ -63,6 +66,9 @@ namespace Scripts.MinigameSystem.Swipe
         IEnumerator EndSwipeGame()
         {
             yield return EndGameRoutine();
+            var sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
+            sfxBus.getVolume(out float volume);
+            sfxBus.setVolume(volume * 2f);
             DialogueAudioScript.Instance.PlayDialogue("ITPT_2");
             SubtitleUI.Instance.DisplaySubtitle("I remember! This was Mrs. Porter's last trip before going into maternity leave! ", ESubtitleDisplayMode.Dynamic);
             int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
