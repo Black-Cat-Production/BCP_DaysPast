@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FMODUnity;
 using Scripts.Audio;
+using Scripts.InteractionSystem;
 using Scripts.UI.Subtitles;
 using Scripts.Utility;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
         [SerializeField] CanvasGroup connectUIGroup;
         [SerializeField] PlayerInput playerInput;
         [SerializeField] List<Dot> dots = new List<Dot>();
+        [SerializeField] TutorialTextHelper tutorialTextHelper;
         UILineDrawer lineDrawer;
         Dot selectedDot;
 
@@ -152,6 +154,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
         IEnumerator StartConnectTheDots()
         {
             yield return StartGameRoutine();
+            tutorialTextHelper.DisplayTutorial(_delayUntilVoiceLine: true);
             yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(DialogueAudioScript.Instance.CurrentSessionID));
             if (DialogueAudioScript.Instance.WasCancelled) yield break;
             DialogueAudioScript.Instance.PlayDialogue("CTD_1");

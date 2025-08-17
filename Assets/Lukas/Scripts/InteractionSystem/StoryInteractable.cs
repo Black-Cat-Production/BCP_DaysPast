@@ -17,6 +17,7 @@ namespace Scripts.InteractionSystem
     {
         bool hasContinuedMain = false;
         [SerializeField] TutorialTextHelper tutorialTextHelper;
+        [SerializeField] int tutorialTextHelperDelay = 0;
 
         [SerializeField] int startIndexDialogueChain;
         [SerializeField] int endIndexDialogueChain;
@@ -48,7 +49,7 @@ namespace Scripts.InteractionSystem
             {
                 if (SubtitleUI.Instance == null) return;
                 PlayVoiceLine(EVoiceLineType.CameraError);
-                if (tutorialTextHelper != null) tutorialTextHelper.DisplayTutorial(true);
+                if (tutorialTextHelper != null) tutorialTextHelper.DisplayTutorial(tutorialTextHelperDelay,true);
                 return;
             }
 

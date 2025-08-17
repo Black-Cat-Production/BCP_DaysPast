@@ -17,6 +17,7 @@ namespace Scripts.UI.PauseMenu
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             playerController = FindObjectOfType<PlayerController>();
+            FMODUnity.RuntimeManager.PauseAllEvents(true);
         }
 
         void OnDisable()
@@ -24,6 +25,7 @@ namespace Scripts.UI.PauseMenu
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             playerController.Unpause();
+            FMODUnity.RuntimeManager.PauseAllEvents(false);
         }
 
         public void Resume()
