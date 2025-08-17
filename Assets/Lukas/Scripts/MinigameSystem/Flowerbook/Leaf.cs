@@ -1,5 +1,6 @@
 ﻿using System;
 using Cinemachine;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,18 +16,20 @@ namespace Scripts.MinigameSystem.Flowerbook
 
         public Action<Leaf> OnPlace;
         public Action<Leaf> OnPickup;
-
+        StudioEventEmitter eventEmitter;
+        
         void Awake()
         {
             startPosition = transform.position;
+            eventEmitter = GetComponent<StudioEventEmitter>();
         }
 
 
         public void OnPointerClick(PointerEventData _eventData)
         {
             if (gotPlaced) return;
-            Debug.Log("OnPointerClick");
             pickedUp = !pickedUp;
+            eventEmitter.Play();
             OnPickup?.Invoke(this);
             if (pickedUp) return;
             OnPlace?.Invoke(this);

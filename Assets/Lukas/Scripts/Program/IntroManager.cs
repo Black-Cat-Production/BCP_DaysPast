@@ -32,7 +32,7 @@ namespace Scripts.Program
         IEnumerator IntroRoutine()
         {
             Debug.Log(introSprites.Count);
-            int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
+            int mySessionID;
             for (int i = 0; i < introSprites.Count; i++)
             {
                 introSlide.sprite = (i + 1) switch
@@ -42,6 +42,7 @@ namespace Scripts.Program
                     _ => introSlide.sprite
                 };
                 DialogueAudioScript.Instance.PlayDialogue("OPEN_" + (i + 1));
+                mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
                 Debug.Log("OPEN_" + (i+1));
                 yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
                 if (DialogueAudioScript.Instance.WasCancelled) yield break;
@@ -49,6 +50,7 @@ namespace Scripts.Program
 
             introSlide.sprite = introSprites[^1];
             DialogueAudioScript.Instance.PlayDialogue("OPEN_12");
+            mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
             yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
             if (DialogueAudioScript.Instance.WasCancelled) yield break;
             yield return new WaitForSeconds(0.5f);

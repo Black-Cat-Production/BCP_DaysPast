@@ -22,7 +22,6 @@ namespace Scripts.InteractionSystem
         [SerializeField] int fullStepCount = 8;
         [SerializeField] Canvas interactionIconCanvas;
         [SerializeField] EndGameDialogue endGameDialogue;
-
         [SerializeField] SceneLoader mainHubLoader;
         [SerializeField] SettingsSO settings;
         
@@ -138,7 +137,7 @@ namespace Scripts.InteractionSystem
 
         void UpdateShader()
         {
-            float calculatedStep = ((float)stepCount - 1)  / fullStepCount;
+            float calculatedStep = ((float)stepCount)  / fullStepCount;
             calculatedStep = SmoothCalculatedStep(calculatedStep);
             Debug.Log(calculatedStep);
             shaderMaterial.SetFloat(revealAmount, calculatedStep);
@@ -149,13 +148,10 @@ namespace Scripts.InteractionSystem
             if (_calculatedStep <= 0f) return 0f;
             if (_calculatedStep >= 1f) return 1f;
 
-            // Normalize middle range (0 → 0, 1 → 1)
             float t = Mathf.Clamp01(_calculatedStep);
 
-            // Optional smoothing curve
             t = Mathf.SmoothStep(0f, 1f, t); 
 
-            // Remap to 0.35 - 0.6
             return Mathf.Lerp(0.35f, 0.6f, t);
         }
     }

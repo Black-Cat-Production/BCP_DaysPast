@@ -1,4 +1,5 @@
-﻿using FMODUnity;
+﻿using System.Collections;
+using FMODUnity;
 using UnityEngine;
 
 namespace Scripts.Audio.AudioManager
@@ -28,9 +29,32 @@ namespace Scripts.Audio.AudioManager
 
         public void PlayBGMusic(int _trackNumber)
         {
+            //StartCoroutine(FadeOutBGMusic(_trackNumber));
+            //return;
             eventEmitter.AllowFadeout = true;
             eventEmitter.Stop();
 
+            var tempRef = _trackNumber switch
+            {
+                1 => FMODUnity.RuntimeManager.PathToEventReference(theme01),
+                4 => FMODUnity.RuntimeManager.PathToEventReference(theme04),
+                5 => FMODUnity.RuntimeManager.PathToEventReference(theme05),
+                6 => FMODUnity.RuntimeManager.PathToEventReference(theme06),
+                7 => FMODUnity.RuntimeManager.PathToEventReference(theme07),
+                _ => eventEmitter.EventReference
+            };
+            
+            Destroy(eventEmitter);
+            eventEmitter = gameObject.AddComponent<StudioEventEmitter>();
+            eventEmitter.EventReference = tempRef;
+            eventEmitter.Play();
+        }
+
+        IEnumerator FadeOutBGMusic(int _trackNumber)
+        {
+            eventEmitter.AllowFadeout = true;
+            eventEmitter.Stop();
+            yield return new WaitWhile(eventEmitter.IsPlaying);
             var tempRef = _trackNumber switch
             {
                 1 => FMODUnity.RuntimeManager.PathToEventReference(theme01),

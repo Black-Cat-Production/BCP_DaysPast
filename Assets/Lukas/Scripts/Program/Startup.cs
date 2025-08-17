@@ -15,11 +15,11 @@ namespace Scripts.Program
             Cursor.lockState = CursorLockMode.None;
             
             var musicBus = FMODUnity.RuntimeManager.GetBus("bus:/MUSIC");
-            musicBus.setVolume(settings.MusicVolume / 200f);
+            musicBus.setVolume(settings.MusicVolume / 150);
             var sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
             sfxBus.setVolume( settings.SfxVolume / 110f);
             var dialogueBus = FMODUnity.RuntimeManager.GetBus("bus:/DIALOG");
-            dialogueBus.setVolume(settings.DialogueVolume / 150f);
+            dialogueBus.setVolume(settings.DialogueVolume / 180);
             var masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
             masterBus.setVolume(settings.MasterVolume / 100f);
 

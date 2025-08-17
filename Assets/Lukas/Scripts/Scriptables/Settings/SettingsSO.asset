@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SubtitlesOn: 1
   MouseSensitivity: 0.5
-  MasterVolume: 80
-  MusicVolume: 10
+  MasterVolume: 100
+  MusicVolume: 30
   SfxVolume: 100
-  DialogueVolume: 50
+  DialogueVolume: 30
