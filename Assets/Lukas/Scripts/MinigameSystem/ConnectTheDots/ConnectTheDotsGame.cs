@@ -177,6 +177,7 @@ namespace Scripts.MinigameSystem.ConnectTheDots
         IEnumerator EndConnectTheDots()
         {
             yield return EndGameRoutine();
+            tutorialTextHelper.DestroyTutorial();
             DialogueAudioScript.Instance.PlayDialogue("SH_5");
             SubtitleUI.Instance.DisplaySubtitle("Tom and I lost contact after school, but we used to get in trouble all the time together.. ",ESubtitleDisplayMode.Dynamic);
             int mySessionID = DialogueAudioScript.Instance.CurrentSessionID;

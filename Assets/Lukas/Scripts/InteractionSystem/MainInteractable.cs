@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Scripts.Audio;
@@ -59,6 +60,15 @@ namespace Scripts.InteractionSystem
             foreach (var interactable in prerequisites)
             {
                 interactable.OnInteracted -= ContinueMainItem;
+            }
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                stepCount = fullStepCount;
+                UpdateShader();
             }
         }
 

@@ -10,7 +10,7 @@ namespace Scripts.DialogueSystem
     public class EndGameDialogue : MonoBehaviour
     {
         [SerializeField] List<string> voiceLines = new();
-
+        
 
         public IEnumerator StartEndGameDialogue()
         {
@@ -20,10 +20,10 @@ namespace Scripts.DialogueSystem
             yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
             BGMusicManager.Instance.PlayBGMusic(1);
             if (DialogueAudioScript.Instance.WasCancelled) yield break;
-            for (int i = 0; i < voiceLines.Count; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 DialogueAudioScript.Instance.PlayDialogue("CFF_" + (i+1));
-                SubtitleUI.Instance.DisplaySubtitle(voiceLines[i], ESubtitleDisplayMode.Dynamic);
+                SubtitleUI.Instance.DisplaySubtitle(voiceLines[i - 1], ESubtitleDisplayMode.Dynamic);
                 mySessionID = DialogueAudioScript.Instance.CurrentSessionID;
                 yield return new WaitUntil(() => DialogueAudioScript.Instance.WaitUntilDialogueDone(mySessionID));
                 if (DialogueAudioScript.Instance.WasCancelled) yield break;
